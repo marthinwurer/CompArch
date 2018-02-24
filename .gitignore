@@ -1,0 +1,5 @@
+.idea/
+*.o
+*.d
+cmake-build-debug/
+archlib/cmake/
