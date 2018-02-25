@@ -160,7 +160,7 @@ void subx(bool reg) {
  * @param reg
  */
 void clrx(bool reg) {
-    print_addr = true;
+    print_addr = false;
     mnemonic = "CLR" + reg_name(reg);
 
     Clearable &curr = *get_reg(reg);
@@ -174,7 +174,7 @@ void clrx(bool reg) {
  * @param reg
  */
 void comx(bool reg) {
-    print_addr = true;
+    print_addr = false;
     mnemonic = "COM" + reg_name(reg);
 
     StorageObject &curr = *get_reg(reg);
@@ -307,7 +307,7 @@ bool tpx(bool reg){
 
 void handle_invalid(ulong opcode, bool reg){
     //# todo
-    cout << bitset<6>((opcode << 1) | (reg?0b1:0b0)) << endl;
+//    cout << bitset<6>((opcode << 1) | (reg?0b1:0b0)) << endl;
     mnemonic = "????";
     print_addr = false;
     throw ArchLibError("undefined opcode");
@@ -320,6 +320,7 @@ void handle_invalid(ulong opcode, bool reg){
  * @return whether to skip increment of ic
  */
 bool exec_opcode(ulong opcode, ulong am) {
+    bad_addr = false;
 
     bool reg = (opcode & 0b1) == 0b1;
     opcode = opcode >> 1;
@@ -351,7 +352,8 @@ bool exec_opcode(ulong opcode, ulong am) {
         case 0b01011:
             if (am != 0b00){
                 print_addr = false;
-                mnemonic = "???";
+                mnemonic = "LI" + reg_name(reg);
+                bad_addr = true;
                 throw ArchLibError("illegal addressing mode");
             }
             lix(reg);
@@ -386,10 +388,10 @@ bool exec_opcode(ulong opcode, ulong am) {
         case 0b10100:
             andx(reg);
             break;
-        case 0b101001:
+        case 0b10101:
             orx(reg);
             break;
-        case 0b101010:
+        case 0b10110:
             xorx(reg);
             break;
 

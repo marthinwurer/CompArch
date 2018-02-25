@@ -26,7 +26,7 @@ bool halt(false);
 
 // globals for trace printing
 ulong pc, instruction, addr, A, B, XR;
-bool print_addr;
+bool print_addr, bad_addr;
 string mnemonic;
 
 
@@ -37,6 +37,8 @@ void print_trace() {
     cout << setfill(' ') << left << setw(6) << mnemonic << right;
     if (print_addr){
         cout << setfill('0') << setw(3) << hex << addr << "  ";
+    } else if (bad_addr) {
+        cout << "???  ";
     } else {
         cout << "     ";
     }

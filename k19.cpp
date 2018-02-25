@@ -73,6 +73,8 @@ int main( int argc, char * argv[]) {
 
     m.MAR().connectsTo(dbus.IN());
     ic.connectsTo(dbus.OUT());
+    a.connectsTo(m.WRITE());
+    b.connectsTo(m.WRITE());
 
 
 

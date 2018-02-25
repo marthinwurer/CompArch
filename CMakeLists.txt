@@ -6,5 +6,5 @@ set(CMAKE_CXX_STANDARD 11)
 add_subdirectory(archlib)
 include_directories(archlib)
 
-add_executable(p1 k19.cpp globals.cpp globals.h addressing.cpp addressing.h opcodes.cpp opcodes.h)
-target_link_libraries(p1 arch2-5a)
+add_executable(k19 k19.cpp globals.cpp globals.h addressing.cpp addressing.h opcodes.cpp opcodes.h)
+target_link_libraries(k19 arch2-5a)
