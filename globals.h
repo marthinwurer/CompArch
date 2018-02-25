@@ -27,6 +27,7 @@ extern StorageObject ir;
 extern Counter ic;
 extern Memory m;
 extern BusALU alu;
+extern BusALU addr_alu; // ALU
 
 extern bool halt;
 

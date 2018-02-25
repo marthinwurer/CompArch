@@ -17,5 +17,6 @@ StorageObject xr("XR", ADR_BITS); // Index register. Contains a value to be used
 Counter ic("IC", ADR_BITS); // PC. Address of the next instruction to be fetched, decoded, and executed.
 Memory m("m", ADR_BITS, DATA_BITS); // Memory
 BusALU alu("ALU", DATA_BITS); // ALU
+BusALU addr_alu("A_ALU", ADR_BITS); // ALU
 
 bool halt(false);

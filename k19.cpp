@@ -3,6 +3,7 @@
 
 
 #include "globals.h"
+#include "addressing.h"
 
 int main( int argc, char * argv[]) {
 
@@ -32,8 +33,10 @@ int main( int argc, char * argv[]) {
     // accumulators
     a.connectsTo(dbus.IN());
     a.connectsTo(dbus.OUT());
+    a.connectsTo(alu.OP1());
     b.connectsTo(dbus.IN());
     b.connectsTo(dbus.OUT());
+    b.connectsTo(alu.OP1());
 
 
     // ic, ir, and xr
@@ -47,6 +50,16 @@ int main( int argc, char * argv[]) {
     ir.connectsTo(dbus.OUT());
     ir.connectsTo(m.READ());
 
+    // connections required for addressing logic
+
+    ir.connectsTo(abus.IN());
+    ir.connectsTo(addr_alu.OP1());
+    xr.connectsTo(addr_alu.OP2());
+    m.MAR().connectsTo(addr_alu.OUT());
+    m.MAR().connectsTo(addr_alu.OP1());
+    m.MAR().connectsTo(m.READ());
+
+
 
 
 
@@ -59,37 +72,46 @@ int main( int argc, char * argv[]) {
     ic.latchFrom(m.READ());
     Clock::tick();
 
-    while (!halt){
+    try {
 
-        // START IF
+
+        while (!halt) {
+
+            // START IF
 //        cout << "latch from read" << endl;
-        abus.IN().pullFrom(ic);
-        m.MAR().latchFrom(abus.OUT());
-        m.read();
-        Clock::tick();
-        m.read();
-        ir.latchFrom(m.READ());
-        Clock::tick();
-        // END IF
+            abus.IN().pullFrom(ic);
+            m.MAR().latchFrom(abus.OUT());
+            m.read();
+            Clock::tick();
+            m.read();
+            ir.latchFrom(m.READ());
+            Clock::tick();
+            // END IF
 
-        // START DECODE
-        // get the addressing mode
-        ulong am = ir.uvalue() >> 18;
-        ulong opcode = ir.uvalue() >> 12 & 0b111111;
-        cout << am << " " << opcode << endl;
+            // START DECODE
+            // get the addressing mode
+            ulong am = ir.uvalue() >> 18;
+            ulong opcode = ir.uvalue() >> 12 & 0b111111;
+            cout << am << " " << opcode << endl;
 
-        // compute the addressing mode
+            // compute the addressing mode
+            calc_addressing(am);
+            calc_addressing(0b00);
+            calc_addressing(0b01);
+            calc_addressing(0b10);
+            calc_addressing(0b11);
+
+            // mdr is now the correct address.
 
 
+            count++;
+            if (count > 1) {
+                halt = true;
 
-
-
-
-        count ++;
-        if (count > 10){
-            halt = true;
-
+            }
         }
+    }catch( ArchLibError e){
+        cout << e.what() << endl;
     }
 
     // teardown
