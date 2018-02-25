@@ -34,6 +34,36 @@ void ldx(bool reg){
 }
 
 /**
+ * STx	Store the indicated register into memory.
+ * @param reg
+ */
+void stx(bool reg) {
+    print_addr = true;
+    mnemonic = "ST" + reg_name(reg);
+
+    StorageObject &curr = *get_reg(reg);
+    m.WRITE().pullFrom(curr);
+    m.write();
+    Clock::tick();
+}
+
+/**
+ * EMx	Exchange the indicated register with memory.
+ * @param reg
+ */
+void emx(bool reg) {
+    print_addr = true;
+    mnemonic = "EM" + reg_name(reg);
+
+    StorageObject &curr = *get_reg(reg);
+    m.WRITE().pullFrom(curr);
+    m.write();
+    dbus.IN().pullFrom(mdr);
+    curr.latchFrom(dbus.OUT());
+    Clock::tick();
+}
+
+/**
  * ADDx	Add memory to the indicated register.
  * @param reg
  */
@@ -67,8 +97,16 @@ void exec_opcode(ulong opcode, ulong am) {
 
             throw ArchLibError("HALT instruction executed");
             break;
+        case 0b00001:
+            break;
         case 0b01000:
             ldx(reg);
+            break;
+        case 0b01001:
+            stx(reg);
+            break;
+        case 0b01010:
+            emx(reg);
             break;
 
         case 0b10000:

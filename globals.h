@@ -10,6 +10,7 @@
 #include <Counter.h>
 #include <Memory.h>
 #include <BusALU.h>
+#include <Clearable.h>
 
 typedef unsigned long ulong;
 
@@ -19,8 +20,8 @@ extern const unsigned int DATA_BITS;
 extern Bus abus;
 extern Bus dbus;
 
-extern StorageObject a;
-extern StorageObject b;
+extern Clearable a;
+extern Clearable b;
 extern StorageObject mdr;
 extern StorageObject xr;
 extern StorageObject ir;
