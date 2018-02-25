@@ -336,7 +336,7 @@ bool exec_opcode(ulong opcode, ulong am) {
             break;
         case 0b00001:
             if(reg) handle_invalid(opcode, reg);
-            print_addr = true;
+            print_addr = false;
             mnemonic = "NOP";
             break;
 
@@ -365,11 +365,11 @@ bool exec_opcode(ulong opcode, ulong am) {
             break;
         case 0b01101:
             if(reg) handle_invalid(opcode, reg);
-            lixr();
+            stxr();
             break;
         case 0b01110:
             if(reg) handle_invalid(opcode, reg);
-            stxr();
+            lixr();
             break;
 
         case 0b10000:
