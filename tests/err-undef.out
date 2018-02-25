@@ -1,0 +1,12 @@
+CPU "ARCH" Simulator, 2.5a(Jan 22 2015)
+-----------------------------------------
+
+Memory sets starting address to 0
+000:  10100  LDA   100  A[00000]  B[00000]  XR[000]
+001:  05000  ????       A[00ace]  B[00000]  XR[000]
+
+Machine Halted - undefined opcode
+
+Simulated time 10 cycles
+
+LAST CPUObject DESTROYED; END OF SIMULATION

@@ -11,6 +11,8 @@
 #include <Memory.h>
 #include <BusALU.h>
 
+typedef unsigned long ulong;
+
 extern const unsigned int ADR_BITS;
 extern const unsigned int DATA_BITS;
 

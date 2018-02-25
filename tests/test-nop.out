@@ -1,0 +1,13 @@
+CPU "ARCH" Simulator, 2.5a(Jan 22 2015)
+-----------------------------------------
+
+Memory sets starting address to 0
+000:  02000  NOP        A[00000]  B[00000]  XR[000]
+001:  02000  NOP        A[00000]  B[00000]  XR[000]
+002:  00000  HALT       A[00000]  B[00000]  XR[000]
+
+Machine Halted - HALT instruction executed
+
+Simulated time 10 cycles
+
+LAST CPUObject DESTROYED; END OF SIMULATION

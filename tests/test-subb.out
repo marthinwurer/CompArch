@@ -1,0 +1,20 @@
+CPU "ARCH" Simulator, 2.5a(Jan 22 2015)
+-----------------------------------------
+
+Memory sets starting address to 100
+100:  11050  LDB   050  A[00000]  B[00000]  XR[000]
+101:  23050  SUBB  050  A[00000]  B[00001]  XR[000]
+102:  11050  LDB   050  A[00000]  B[00000]  XR[000]
+103:  23051  SUBB  051  A[00000]  B[00001]  XR[000]
+104:  23050  SUBB  050  A[00000]  B[ffffc]  XR[000]
+105:  11050  LDB   050  A[00000]  B[ffffb]  XR[000]
+106:  23052  SUBB  052  A[00000]  B[00001]  XR[000]
+107:  11050  LDB   050  A[00000]  B[00002]  XR[000]
+108:  23053  SUBB  053  A[00000]  B[00001]  XR[000]
+109:  00000  HALT       A[00000]  B[00006]  XR[000]
+
+Machine Halted - HALT instruction executed
+
+Simulated time 53 cycles
+
+LAST CPUObject DESTROYED; END OF SIMULATION

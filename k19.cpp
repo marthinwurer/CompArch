@@ -4,9 +4,20 @@
 
 #include "globals.h"
 
-int main() {
+int main( int argc, char * argv[]) {
 
     CPUObject::debug |= CPUObject::trace | CPUObject::memload;
+    cout << hex;
+
+    // get command line input
+    // taken from dumbest
+    if( argc != 2 ) {
+        cerr << "Usage:  " << argv[0] << " object-file-name\n\n";
+        exit( 1 );
+    }
+
+    m.load( argv[1] );
+
     // setup
     // memory
 //    m.MAR().connectsTo(abus.IN());
@@ -28,11 +39,13 @@ int main() {
     // ic, ir, and xr
     ic.connectsTo(abus.IN());
     ic.connectsTo(abus.OUT());
+    ic.connectsTo(m.READ()); // hack to get start point
     xr.connectsTo(abus.IN());
     xr.connectsTo(abus.OUT());
 
     ir.connectsTo(dbus.IN());
     ir.connectsTo(dbus.OUT());
+    ir.connectsTo(m.READ());
 
 
 
@@ -42,14 +55,34 @@ int main() {
     // run
     int count = 0;
 
+    // entry point hack
+    ic.latchFrom(m.READ());
+    Clock::tick();
+
     while (!halt){
 
-        cout << "latch from read" << endl;
+        // START IF
+//        cout << "latch from read" << endl;
         abus.IN().pullFrom(ic);
         m.MAR().latchFrom(abus.OUT());
         m.read();
-        mdr.latchFrom(m.READ());
         Clock::tick();
+        m.read();
+        ir.latchFrom(m.READ());
+        Clock::tick();
+        // END IF
+
+        // START DECODE
+        // get the addressing mode
+        ulong am = ir.uvalue() >> 18;
+        ulong opcode = ir.uvalue() >> 12 & 0b111111;
+        cout << am << " " << opcode << endl;
+
+        // compute the addressing mode
+
+
+
+
 
 
         count ++;

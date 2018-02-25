@@ -1,0 +1,17 @@
+CPU "ARCH" Simulator, 2.5a(Jan 22 2015)
+-----------------------------------------
+
+Memory sets starting address to 100
+100:  10050  LDA   050  A[00000]  B[00000]  XR[000]
+101:  2a051  ORA   051  A[aaaaa]  B[00000]  XR[000]
+102:  10050  LDA   050  A[fffff]  B[00000]  XR[000]
+103:  2a052  ORA   052  A[aaaaa]  B[00000]  XR[000]
+104:  10051  LDA   051  A[bbbbb]  B[00000]  XR[000]
+105:  2a052  ORA   052  A[55555]  B[00000]  XR[000]
+106:  00000  HALT       A[ddddd]  B[00000]  XR[000]
+
+Machine Halted - HALT instruction executed
+
+Simulated time 37 cycles
+
+LAST CPUObject DESTROYED; END OF SIMULATION

@@ -1,0 +1,17 @@
+CPU "ARCH" Simulator, 2.5a(Jan 22 2015)
+-----------------------------------------
+
+Memory sets starting address to 100
+100:  11050  LDB   050  A[00000]  B[00000]  XR[000]
+101:  27053  COMB       A[00000]  B[aaaaa]  XR[000]
+102:  11051  LDB   051  A[00000]  B[55555]  XR[000]
+103:  27053  COMB       A[00000]  B[55555]  XR[000]
+104:  11052  LDB   052  A[00000]  B[aaaaa]  XR[000]
+105:  27053  COMB       A[00000]  B[99999]  XR[000]
+106:  00000  HALT       A[00000]  B[66666]  XR[000]
+
+Machine Halted - HALT instruction executed
+
+Simulated time 34 cycles
+
+LAST CPUObject DESTROYED; END OF SIMULATION

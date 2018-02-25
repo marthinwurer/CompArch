@@ -1,0 +1,17 @@
+CPU "ARCH" Simulator, 2.5a(Jan 22 2015)
+-----------------------------------------
+
+Memory sets starting address to 200
+200:  1c001  LIXR  001  A[00000]  B[00000]  XR[000]
+201:  1c005  LIXR  005  A[00000]  B[00000]  XR[001]
+202:  1c7ff  LIXR  7ff  A[00000]  B[00000]  XR[005]
+203:  1cfff  LIXR  fff  A[00000]  B[00000]  XR[7ff]
+204:  1cffb  LIXR  ffb  A[00000]  B[00000]  XR[fff]
+205:  1c800  LIXR  800  A[00000]  B[00000]  XR[ffb]
+206:  00000  HALT       A[00000]  B[00000]  XR[800]
+
+Machine Halted - HALT instruction executed
+
+Simulated time 22 cycles
+
+LAST CPUObject DESTROYED; END OF SIMULATION

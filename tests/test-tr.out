@@ -1,0 +1,18 @@
+CPU "ARCH" Simulator, 2.5a(Jan 22 2015)
+-----------------------------------------
+
+Memory sets starting address to 500
+500:  30510  TR    510  A[00000]  B[00000]  XR[000]
+510:  30550  TR    550  A[00000]  B[00000]  XR[000]
+550:  30540  TR    540  A[00000]  B[00000]  XR[000]
+540:  30520  TR    520  A[00000]  B[00000]  XR[000]
+520:  30560  TR    560  A[00000]  B[00000]  XR[000]
+560:  30530  TR    530  A[00000]  B[00000]  XR[000]
+530:  30000  TR    000  A[00000]  B[00000]  XR[000]
+000:  00000  HALT       A[00000]  B[00000]  XR[000]
+
+Machine Halted - HALT instruction executed
+
+Simulated time 39 cycles
+
+LAST CPUObject DESTROYED; END OF SIMULATION

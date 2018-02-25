@@ -1,0 +1,31 @@
+CPU "ARCH" Simulator, 2.5a(Jan 22 2015)
+-----------------------------------------
+
+Memory sets starting address to 300
+300:  18100  LDXR  100  A[00000]  B[00000]  XR[000]
+301:  1a104  STXR  104  A[00000]  B[00000]  XR[001]
+302:  18105  LDXR  105  A[00000]  B[00000]  XR[001]
+303:  18104  LDXR  104  A[00000]  B[00000]  XR[000]
+304:  10104  LDA   104  A[00000]  B[00000]  XR[001]
+305:  18101  LDXR  101  A[00001]  B[00000]  XR[001]
+306:  1a104  STXR  104  A[00001]  B[00000]  XR[005]
+307:  18105  LDXR  105  A[00001]  B[00000]  XR[005]
+308:  18104  LDXR  104  A[00001]  B[00000]  XR[000]
+309:  10104  LDA   104  A[00001]  B[00000]  XR[005]
+30a:  18102  LDXR  102  A[00005]  B[00000]  XR[005]
+30b:  1a104  STXR  104  A[00005]  B[00000]  XR[fff]
+30c:  18105  LDXR  105  A[00005]  B[00000]  XR[fff]
+30d:  18104  LDXR  104  A[00005]  B[00000]  XR[000]
+30e:  10104  LDA   104  A[00005]  B[00000]  XR[fff]
+30f:  18103  LDXR  103  A[00fff]  B[00000]  XR[fff]
+310:  1a104  STXR  104  A[00fff]  B[00000]  XR[ffb]
+311:  18105  LDXR  105  A[00fff]  B[00000]  XR[ffb]
+312:  18104  LDXR  104  A[00fff]  B[00000]  XR[000]
+313:  10104  LDA   104  A[00fff]  B[00000]  XR[ffb]
+314:  00000  HALT       A[00ffb]  B[00000]  XR[ffb]
+
+Machine Halted - HALT instruction executed
+
+Simulated time 124 cycles
+
+LAST CPUObject DESTROYED; END OF SIMULATION
