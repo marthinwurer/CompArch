@@ -9,7 +9,7 @@
 
 int main( int argc, char * argv[]) {
 
-    CPUObject::debug |= CPUObject::trace | CPUObject::memload;
+//    CPUObject::debug |= CPUObject::trace | CPUObject::memload;
     cout << hex;
 
     // get command line input
@@ -70,6 +70,9 @@ int main( int argc, char * argv[]) {
     xr.connectsTo(m.WRITE());
     xr.connectsTo(dbus.OUT());
 
+    m.MAR().connectsTo(dbus.IN());
+    ic.connectsTo(dbus.OUT());
+
 
 
 
@@ -109,7 +112,7 @@ int main( int argc, char * argv[]) {
             // get the addressing mode
             ulong am = ir.uvalue() >> 18;
             ulong opcode = ir.uvalue() >> 12 & 0b111111;
-            cout << am << " " << std::bitset<6>(opcode) << endl; // todo
+//            cout << am << " " << std::bitset<6>(opcode) << endl; // todo
 
             // compute the addressing mode
             calc_addressing(am);
@@ -119,11 +122,11 @@ int main( int argc, char * argv[]) {
 //            calc_addressing(0b11);
 
             // mdr is now the correct value.
-            cout << "mdr " << mdr.uvalue() << endl;
+//            cout << "mdr " << mdr.uvalue() << endl;
             // END DECODE
 
             // find and execute the correct operation
-            exec_opcode(opcode, am);
+            bool skip = exec_opcode(opcode, am);
 
 
 //            count++;
@@ -133,8 +136,10 @@ int main( int argc, char * argv[]) {
 //            }
 
             // increment the pc
-            ic.incr();
-            Clock::tick();
+            if (!skip){
+                ic.incr();
+                Clock::tick();
+            }
             print_trace();
         }
     }catch( ArchLibError & e){

@@ -7,6 +7,6 @@
 
 #include "globals.h"
 
-void exec_opcode(ulong opcode, ulong am);
+bool exec_opcode(ulong opcode, ulong am);
 
 #endif //P1_OPCODES_H
