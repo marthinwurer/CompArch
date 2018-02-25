@@ -32,6 +32,7 @@ extern BusALU addr_alu; // ALU
 
 extern bool halt;
 
+extern StorageObject se_mask_12;
 extern ulong pc, instruction, addr, A, B, XR;
 extern bool print_addr;
 extern string mnemonic;

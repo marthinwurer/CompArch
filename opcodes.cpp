@@ -64,6 +64,25 @@ void emx(bool reg) {
 }
 
 /**
+ * LIx	Load the indicated register with the sign-extended contents of the address field (i.e., treat it as data).
+ * @param reg
+ */
+void lix(bool reg) {
+    print_addr = true;
+    mnemonic = "LI" + reg_name(reg);
+
+    // get a mask for the sign bit
+
+    StorageObject &curr = *get_reg(reg);
+
+    curr.latchFrom(alu.OUT());
+    alu.OP1().pullFrom(curr);
+    alu.OP2().pullFrom(se_mask_12);
+    alu.perform(BusALU::Operation::op_extendSign);
+    Clock::tick();
+}
+
+/**
  * ADDx	Add memory to the indicated register.
  * @param reg
  */
@@ -80,6 +99,14 @@ void addx(bool reg) {
     Clock::tick();
 }
 
+void handle_invalid(ulong opcode, bool reg){
+    //# todo
+    cout << bitset<6>((opcode << 1) | (reg?0b1:0b0)) << endl;
+    mnemonic = "????";
+    print_addr = false;
+    throw ArchLibError("undefined opcode");
+}
+
 /**
  * execute an opcode
  * @param opcode
@@ -92,13 +119,19 @@ void exec_opcode(ulong opcode, ulong am) {
 
     switch (opcode){
         case 0b00000:
+            if(reg) handle_invalid(opcode, reg);
             mnemonic = "HALT";
             print_addr = false;
+
 
             throw ArchLibError("HALT instruction executed");
             break;
         case 0b00001:
+            if(reg) handle_invalid(opcode, reg);
+            print_addr = true;
+            mnemonic = "NOP";
             break;
+
         case 0b01000:
             ldx(reg);
             break;
@@ -108,6 +141,14 @@ void exec_opcode(ulong opcode, ulong am) {
         case 0b01010:
             emx(reg);
             break;
+        case 0b01011:
+            if (am != 0b00){
+                print_addr = false;
+                mnemonic = "???";
+                throw ArchLibError("illegal addressing mode");
+            }
+            lix(reg);
+            break;
 
         case 0b10000:
             addx(reg);
@@ -116,10 +157,7 @@ void exec_opcode(ulong opcode, ulong am) {
 
         default:
             // todo
-            cout << bitset<6>((opcode << 1) | (reg?0b1:0b0)) << endl;
-            mnemonic = "????";
-            print_addr = false;
-            throw ArchLibError("undefined opcode");
+            handle_invalid(opcode,reg);
     }
 
 }

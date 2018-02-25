@@ -20,6 +20,8 @@ Memory m("m", ADR_BITS, DATA_BITS); // Memory
 BusALU alu("ALU", DATA_BITS); // ALU
 BusALU addr_alu("A_ALU", ADR_BITS); // ALU
 
+StorageObject se_mask_12("SE12", ADR_BITS, 0x800);
+
 bool halt(false);
 
 // globals for trace printing
@@ -35,15 +37,11 @@ void print_trace() {
     cout << setfill(' ') << left << setw(6) << mnemonic << right;
     if (print_addr){
         cout << setfill('0') << setw(3) << hex << addr << "  ";
-    } else{
+    } else {
         cout << "     ";
     }
 
     cout << "A[" << setfill('0') << setw(5) << hex << A << "]  ";
     cout << "B[" << setfill('0') << setw(5) << hex << B << "]  ";
     cout << "XR[" << setfill('0') << setw(3) << hex << XR << "]" << endl;
-
-
-
-
 }

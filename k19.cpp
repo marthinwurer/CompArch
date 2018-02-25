@@ -63,6 +63,7 @@ int main( int argc, char * argv[]) {
     // connections required for alu logic
     a.connectsTo(alu.OUT());
     b.connectsTo(alu.OUT());
+    se_mask_12.connectsTo(alu.OP2());
 
 
 
