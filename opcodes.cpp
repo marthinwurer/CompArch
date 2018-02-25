@@ -76,7 +76,7 @@ void lix(bool reg) {
     StorageObject &curr = *get_reg(reg);
 
     curr.latchFrom(alu.OUT());
-    alu.OP1().pullFrom(curr);
+    alu.OP1().pullFrom(m.MAR());
     alu.OP2().pullFrom(se_mask_12);
     alu.perform(BusALU::Operation::op_extendSign);
     Clock::tick();

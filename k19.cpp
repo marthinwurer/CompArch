@@ -64,6 +64,7 @@ int main( int argc, char * argv[]) {
     a.connectsTo(alu.OUT());
     b.connectsTo(alu.OUT());
     se_mask_12.connectsTo(alu.OP2());
+    m.MAR().connectsTo(alu.OP1());
 
     // whyyyyyy
     xr.connectsTo(m.READ());

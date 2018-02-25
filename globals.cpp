@@ -16,7 +16,7 @@ StorageObject mdr("MDR", DATA_BITS); // Data to be written into, or data most re
 StorageObject ir("IR", DATA_BITS); // Instruction Register. Instruction being decoded and executed.
 StorageObject xr("XR", ADR_BITS); // Index register. Contains a value to be used in calculating a memory address.
 Counter ic("IC", ADR_BITS); // PC. Address of the next instruction to be fetched, decoded, and executed.
-Memory m("m", ADR_BITS, DATA_BITS); // Memory
+Memory m("Memory", ADR_BITS, DATA_BITS); // Memory
 BusALU alu("ALU", DATA_BITS); // ALU
 BusALU addr_alu("A_ALU", ADR_BITS); // ALU
 
