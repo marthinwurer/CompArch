@@ -83,6 +83,45 @@ void lix(bool reg) {
 }
 
 /**
+ * LDXR	Load the XR from memory.
+ * @param reg
+ */
+void ldxr(){
+    print_addr = true;
+    mnemonic = "LDXR";
+
+    dbus.IN().pullFrom(mdr);
+    xr.latchFrom(dbus.OUT());
+    Clock::tick();
+}
+
+/**
+ * LIXR	Load the XR with the contents of the address field.
+ * @param reg
+ */
+void lixr(){
+    print_addr = true;
+    mnemonic = "LIXR";
+
+    dbus.IN().pullFrom(m.MAR());
+    xr.latchFrom(dbus.OUT());
+    Clock::tick();
+}
+
+/**
+ * STXR	Store the XR into memory.
+ * @param reg
+ */
+void stxr() {
+    print_addr = true;
+    mnemonic = "STXR";
+
+    m.WRITE().pullFrom(xr);
+    m.write();
+    Clock::tick();
+}
+
+/**
  * ADDx	Add memory to the indicated register.
  * @param reg
  */
@@ -149,6 +188,20 @@ void exec_opcode(ulong opcode, ulong am) {
             }
             lix(reg);
             break;
+
+        case 0b01100:
+            if(reg) handle_invalid(opcode, reg);
+            ldxr();
+            break;
+        case 0b01101:
+            if(reg) handle_invalid(opcode, reg);
+            lixr();
+            break;
+        case 0b01110:
+            if(reg) handle_invalid(opcode, reg);
+            stxr();
+            break;
+
 
         case 0b10000:
             addx(reg);

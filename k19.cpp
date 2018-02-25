@@ -65,6 +65,11 @@ int main( int argc, char * argv[]) {
     b.connectsTo(alu.OUT());
     se_mask_12.connectsTo(alu.OP2());
 
+    // whyyyyyy
+    xr.connectsTo(m.READ());
+    xr.connectsTo(m.WRITE());
+    xr.connectsTo(dbus.OUT());
+
 
 
 
