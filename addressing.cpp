@@ -28,7 +28,7 @@ void calc_addressing(ulong am) {
             m.MAR().latchFrom(addr_alu.OUT());
             addr_alu.OP1().pullFrom(ir);
             addr_alu.OP2().pullFrom(xr);
-            addr_alu.perform(BusALU::Operation::op_add);
+            addr_alu.perform(BusALU::op_add);
             Clock::tick();
             break;
         case 0b10:
@@ -49,7 +49,7 @@ void calc_addressing(ulong am) {
             m.MAR().latchFrom(addr_alu.OUT());
             addr_alu.OP1().pullFrom(m.MAR());
             addr_alu.OP2().pullFrom(xr);
-            addr_alu.perform(BusALU::Operation::op_add);
+            addr_alu.perform(BusALU::op_add);
             Clock::tick();
 
 
@@ -57,7 +57,7 @@ void calc_addressing(ulong am) {
 
         default:
             cout << "AHHHHHHHHHHHHHHHHHH" << endl;
-            exit(1);
+            throw ArchLibError("AAAAAHHHHHH");
 
     }
 

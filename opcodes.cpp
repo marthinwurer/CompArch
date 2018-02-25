@@ -78,7 +78,7 @@ void lix(bool reg) {
     curr.latchFrom(alu.OUT());
     alu.OP1().pullFrom(m.MAR());
     alu.OP2().pullFrom(se_mask_12);
-    alu.perform(BusALU::Operation::op_extendSign);
+    alu.perform(BusALU::op_extendSign);
     Clock::tick();
 }
 
@@ -134,7 +134,7 @@ void addx(bool reg) {
     curr.latchFrom(alu.OUT());
     alu.OP1().pullFrom(curr);
     alu.OP2().pullFrom(mdr);
-    alu.perform(BusALU::Operation::op_add);
+    alu.perform(BusALU::op_add);
     Clock::tick();
 }
 
@@ -151,7 +151,7 @@ void subx(bool reg) {
     curr.latchFrom(alu.OUT());
     alu.OP1().pullFrom(curr);
     alu.OP2().pullFrom(mdr);
-    alu.perform(BusALU::Operation::op_sub);
+    alu.perform(BusALU::op_sub);
     Clock::tick();
 }
 
@@ -181,7 +181,7 @@ void comx(bool reg) {
 
     curr.latchFrom(alu.OUT());
     alu.OP1().pullFrom(curr);
-    alu.perform(BusALU::Operation::op_not);
+    alu.perform(BusALU::op_not);
     Clock::tick();
 }
 
@@ -198,7 +198,7 @@ void andx(bool reg) {
     curr.latchFrom(alu.OUT());
     alu.OP1().pullFrom(curr);
     alu.OP2().pullFrom(mdr);
-    alu.perform(BusALU::Operation::op_and);
+    alu.perform(BusALU::op_and);
     Clock::tick();
 }
 
@@ -215,7 +215,7 @@ void orx(bool reg) {
     curr.latchFrom(alu.OUT());
     alu.OP1().pullFrom(curr);
     alu.OP2().pullFrom(mdr);
-    alu.perform(BusALU::Operation::op_or);
+    alu.perform(BusALU::op_or);
     Clock::tick();
 }
 
@@ -232,7 +232,7 @@ void xorx(bool reg) {
     curr.latchFrom(alu.OUT());
     alu.OP1().pullFrom(curr);
     alu.OP2().pullFrom(mdr);
-    alu.perform(BusALU::Operation::op_xor);
+    alu.perform(BusALU::op_xor);
     Clock::tick();
 }
 
