@@ -248,6 +248,63 @@ void tr(){
     Clock::tick();
 }
 
+/**
+ * TZx	Transfer to the memory address if the indicated register contains zero.
+ */
+bool tzx(bool reg){
+    print_addr = true;
+    mnemonic = "TZ" + reg_name(reg);
+
+    StorageObject &curr = *get_reg(reg);
+
+    bool flag = false;
+    if(curr.uvalue() == 0){
+        flag = true;
+        dbus.IN().pullFrom(m.MAR());
+        ic.latchFrom(dbus.OUT());
+    }
+    Clock::tick();
+    return flag;
+}
+
+/**
+ * TNx	Transfer to the memory address if the indicated register contains a negative number.
+ */
+bool tnx(bool reg){
+    print_addr = true;
+    mnemonic = "TN" + reg_name(reg);
+
+    StorageObject &curr = *get_reg(reg);
+
+    bool flag = false;
+    if(curr.uvalue() & 0x80000){ // the sign bit for 20 bits
+        flag = true;
+        dbus.IN().pullFrom(m.MAR());
+        ic.latchFrom(dbus.OUT());
+    }
+    Clock::tick();
+    return flag;
+}
+
+/**
+ * TPx	Transfer to the memory address if the indicated register a positive number.
+ */
+bool tpx(bool reg){
+    print_addr = true;
+    mnemonic = "TP" + reg_name(reg);
+
+    StorageObject &curr = *get_reg(reg);
+
+    bool flag = false;
+    if(!(curr.uvalue() & 0x80000) and curr.uvalue() > 0){ // the sign bit for 20 bits
+        flag = true;
+        dbus.IN().pullFrom(m.MAR());
+        ic.latchFrom(dbus.OUT());
+    }
+    Clock::tick();
+    return flag;
+}
+
 void handle_invalid(ulong opcode, bool reg){
     //# todo
     cout << bitset<6>((opcode << 1) | (reg?0b1:0b0)) << endl;
@@ -340,7 +397,12 @@ bool exec_opcode(ulong opcode, ulong am) {
             if(reg) handle_invalid(opcode, reg);
             tr();
             return true;
-
+        case 0b11001:
+            return tzx(reg);
+        case 0b11010:
+            return tnx(reg);
+        case 0b11011:
+            return tpx(reg);
 
 
         default:
