@@ -31,6 +31,13 @@ extern BusALU addr_alu; // ALU
 
 extern bool halt;
 
+extern ulong pc, instruction, addr, A, B, XR;
+extern bool print_addr;
+extern string mnemonic;
+
+
+void print_trace();
+
 
 
 #endif //P1_GLOBALS_H

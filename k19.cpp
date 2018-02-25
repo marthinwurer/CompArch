@@ -1,9 +1,11 @@
 #include <iostream>
 #include <Clock.h>
+#include <bitset>
 
 
 #include "globals.h"
 #include "addressing.h"
+#include "opcodes.h"
 
 int main( int argc, char * argv[]) {
 
@@ -51,7 +53,6 @@ int main( int argc, char * argv[]) {
     ir.connectsTo(m.READ());
 
     // connections required for addressing logic
-
     ir.connectsTo(abus.IN());
     ir.connectsTo(addr_alu.OP1());
     xr.connectsTo(addr_alu.OP2());
@@ -59,6 +60,9 @@ int main( int argc, char * argv[]) {
     m.MAR().connectsTo(addr_alu.OP1());
     m.MAR().connectsTo(m.READ());
 
+    // connections required for alu logic
+    a.connectsTo(alu.OUT());
+    b.connectsTo(alu.OUT());
 
 
 
@@ -66,7 +70,7 @@ int main( int argc, char * argv[]) {
 
 
     // run
-    int count = 0;
+//    int count = 0;
 
     // entry point hack
     ic.latchFrom(m.READ());
@@ -77,6 +81,12 @@ int main( int argc, char * argv[]) {
 
         while (!halt) {
 
+            // store trace info
+            A = a.uvalue();
+            B = b.uvalue();
+            XR = xr.uvalue();
+            pc = ic.uvalue();
+
             // START IF
 //        cout << "latch from read" << endl;
             abus.IN().pullFrom(ic);
@@ -86,32 +96,44 @@ int main( int argc, char * argv[]) {
             m.read();
             ir.latchFrom(m.READ());
             Clock::tick();
+            instruction = ir.uvalue();
             // END IF
 
             // START DECODE
             // get the addressing mode
             ulong am = ir.uvalue() >> 18;
             ulong opcode = ir.uvalue() >> 12 & 0b111111;
-            cout << am << " " << opcode << endl;
+            cout << am << " " << std::bitset<6>(opcode) << endl; // todo
 
             // compute the addressing mode
             calc_addressing(am);
-            calc_addressing(0b00);
-            calc_addressing(0b01);
-            calc_addressing(0b10);
-            calc_addressing(0b11);
+//            calc_addressing(0b00);
+//            calc_addressing(0b01);
+//            calc_addressing(0b10);
+//            calc_addressing(0b11);
 
-            // mdr is now the correct address.
+            // mdr is now the correct value.
+            cout << "mdr " << mdr.uvalue() << endl;
+            // END DECODE
+
+            // find and execute the correct operation
+            exec_opcode(opcode, am);
 
 
-            count++;
-            if (count > 1) {
-                halt = true;
+//            count++;
+//            if (count > 1) {
+//                halt = true;
+//
+//            }
 
-            }
+            // increment the pc
+            ic.incr();
+            Clock::tick();
+            print_trace();
         }
-    }catch( ArchLibError e){
-        cout << e.what() << endl;
+    }catch( ArchLibError & e){
+        print_trace();
+        cout << endl << "Machine Halted - " << e.what() << endl;
     }
 
     // teardown

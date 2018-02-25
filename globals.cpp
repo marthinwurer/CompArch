@@ -2,6 +2,7 @@
 // Created by benjamin on 2/19/18.
 //
 
+#include <iomanip>
 #include "globals.h"
 const unsigned int ADR_BITS = 12;
 const unsigned int DATA_BITS = 20;
@@ -20,3 +21,29 @@ BusALU alu("ALU", DATA_BITS); // ALU
 BusALU addr_alu("A_ALU", ADR_BITS); // ALU
 
 bool halt(false);
+
+// globals for trace printing
+ulong pc, instruction, addr, A, B, XR;
+bool print_addr;
+string mnemonic;
+
+
+void print_trace() {
+
+    cout << setfill('0') << setw(3) << hex << pc << ":  ";
+    cout << setfill('0') << setw(5) << hex << instruction << "  ";
+    cout << setfill(' ') << left << setw(6) << mnemonic << right;
+    if (print_addr){
+        cout << setfill('0') << setw(3) << hex << addr << "  ";
+    } else{
+        cout << "     ";
+    }
+
+    cout << "A[" << setfill('0') << setw(5) << hex << A << "]  ";
+    cout << "B[" << setfill('0') << setw(5) << hex << B << "]  ";
+    cout << "XR[" << setfill('0') << setw(3) << hex << XR << "]" << endl;
+
+
+
+
+}

@@ -61,6 +61,8 @@ void calc_addressing(ulong am) {
 
     }
 
+    addr = m.MAR().uvalue();
+
     m.read();
     mdr.latchFrom(m.READ());
     Clock::tick();
