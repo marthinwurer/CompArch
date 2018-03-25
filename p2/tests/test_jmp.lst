@@ -1,0 +1,38 @@
+      1                                 ;
+      2                                 ; tests JMP
+      3                                 ;
+      4                                 ; uses instructions HALT
+      5                                 ;
+      6                                 ; uses addressing modes 6
+      7                                 ;
+      8 000000                                   .globl  start
+      9                                 ;
+     10 000000  000167  000010          start:   jmp     loc3
+     11 000004  000167  000014          loc1:    jmp     loc5
+     12 000010  000167  000014          loc2:    jmp     loc6
+     13 000014  000167  177764          loc3:    jmp     loc1
+     14 000020  000167  000010          loc4:    jmp     loc7
+     15 000024  000167  177760          loc5:    jmp     loc2
+     16 000030  000167  177764          loc6:    jmp     loc4
+     17 000034  000000                  loc7:    halt
+     18 000036  000000'                          .end    start
+
+
+loc1     000004 R  
+loc2     000010 R  
+loc3     000014 R  
+loc4     000020 R  
+loc5     000024 R  
+loc6     000030 R  
+loc7     000034 R  
+pc     = 000007 %  
+r0     = 000000 %  
+r1     = 000001 %  
+r2     = 000002 %  
+r3     = 000003 %  
+r4     = 000004 %  
+r5     = 000005 %  
+r6     = 000006 %  
+r7     = 000007 %  
+sp     = 000006 %  
+start    000000 RG 

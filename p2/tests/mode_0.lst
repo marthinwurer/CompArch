@@ -1,0 +1,32 @@
+      1                                 ;
+      2                                 ; tests addressing mode 0
+      3                                 ;
+      4                                 ; uses instructions HALT, CLR, BPT
+      5                                 ;
+      6                                 ; uses no other addressing modes
+      7                                 ;
+      8 000000                                   .globl  start
+      9 000000  000000                  done:    halt
+     10                                 ;
+     11 000102                          . = . + 100
+     12                                 ;
+     13 000102  010702                  start:   mov     r7,r2
+     14 000104  000003                           bpt
+     15 000106  005007                           clr     r7
+     16 000110  000003                           bpt
+     17                                 ;
+     18 000112  000102'                          .end    start
+
+
+done     000000 R  
+pc     = 000007 %  
+r0     = 000000 %  
+r1     = 000001 %  
+r2     = 000002 %  
+r3     = 000003 %  
+r4     = 000004 %  
+r5     = 000005 %  
+r6     = 000006 %  
+r7     = 000007 %  
+sp     = 000006 %  
+start    000102 RG 

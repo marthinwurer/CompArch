@@ -1,0 +1,40 @@
+Important files:
+
+	header.mak	for use with 'makemake > Makefile'
+
+	*.asm		sample source programs
+	*.obj		sample object programs
+	*.out5		sample 520 output files
+	*.out7		sample 720 output files
+
+	RUN		script to run k19 against the object files
+
+Test files have the following naming convention:
+
+	handout.asm	sample program from the project specification
+	test-*.asm	test a single instruction
+	*-i.asm		test indirect addressing
+	*-x.asm		test indexed addressing
+	*-ix.asm	test indirect indexed addressing
+
+You can create your own object files by using the simple assembler found
+in the project's pub directory, /usr/local/dcs/pub/wrc/courses/csci453/k19.
+See the README.k19asm file there for details.  Please remember that this
+assembler is very simple, and is unlikely to work correctly if given
+bad input (e.g., syntax errors in the assembly language code).
+
+The RUN script can be used to test your simulator against any or all of
+the supplied test programs.  It will run your simulator against one or
+more object files and compare the results against my sample output; if
+there are any differences, a difference listing will be generated.
+
+The script can be invoked with zero or more object file names.  If any
+names are given, only those files will be tested; if no names are given,
+all object files will be tested.
+
+Run the script from inside the directory that contains your simulator.
+Here are some example commands:
+
+	./RUN					run against all .obj files
+	./RUN test-adda.obj			run only test-adda 
+	./RUN test-adda.obj test-subb.obj	run only these two tests

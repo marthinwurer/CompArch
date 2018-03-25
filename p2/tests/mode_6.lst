@@ -1,0 +1,41 @@
+      1                                 ;
+      2                                 ; tests addressing mode 6
+      3                                 ;
+      4                                 ; uses instructions MOV, HALT, BPT
+      5                                 ;
+      6                                 ; uses other addressing modes 0
+      7                                 ;
+      8 000000                                   .globl  start
+      9 000000  000052'                 ptr:     .word   alpha
+     10                                 ;
+     11 000052                          . = . + 50
+     12 000052  000001                  alpha:   .word   1
+     13                                 ;
+     14 000154                          . = . + 100
+     15                                 ;
+     16 000154  016702  177620          start:   mov     ptr,r2
+     17 000160  016767  177666  177612           mov     alpha,ptr
+     18 000166  016703  177606                   mov     ptr,r3
+     19 000172  000003                           bpt
+     20 000174  010267  177600                   mov     r2,ptr
+     21 000200  016704  177574                   mov     ptr,r4
+     22 000204  000003                           bpt
+     23                                 ;
+     24 000206  000000                           halt
+     25                                 ;
+     26 000210  000154'                          .end    start
+
+
+alpha    000052 R  
+pc     = 000007 %  
+ptr      000000 R  
+r0     = 000000 %  
+r1     = 000001 %  
+r2     = 000002 %  
+r3     = 000003 %  
+r4     = 000004 %  
+r5     = 000005 %  
+r6     = 000006 %  
+r7     = 000007 %  
+sp     = 000006 %  
+start    000154 RG 

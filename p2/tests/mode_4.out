@@ -1,0 +1,19 @@
+CPU "ARCH" Simulator, 2.5a(Jan 22 2015)
+-----------------------------------------
+
+Memory sets starting address to 124
+000124:  PS[00]  012701  MOV (R7)+,R1
+000130:  PS[00]  000003  BPT
+  R0[000000]  R1[000052]  R2[000000]  R3[000000]
+  R4[000000]  R5[000000]  R6[000000]  R7[000132]
+000132:  PS[00]  014102  MOV -(R1),R2
+000134:  PS[00]  000003  BPT
+  R0[000000]  R1[000050]  R2[000010]  R3[000000]
+  R4[000000]  R5[000000]  R6[000000]  R7[000136]
+000136:  PS[00]  000000  HALT
+
+Machine Halted - HALT instruction
+
+Simulated time 30 cycles
+
+LAST CPUObject DESTROYED; END OF SIMULATION

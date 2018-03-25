@@ -1,0 +1,41 @@
+;
+; tests NEG
+;
+; uses instructions MOV, BPT, HALT
+;
+; uses addressing modes 0, 6
+;
+	.globl	start
+;
+v1:	.word	1
+v2:	.word	077777
+v3:	.word	177777
+v4:	.word	125252
+v5:	.word	052525
+;
+. = . + 100
+;
+start:	mov	v1,r1
+	mov	v2,r2
+	mov	v3,r3
+	mov	v4,r4
+	mov	v5,r5
+	bpt
+;
+	neg	r1
+	neg	r2
+	neg	r3
+	neg	r4
+	neg	r5
+	bpt
+;
+	neg	r1
+	neg	r2
+	neg	r3
+	neg	r4
+	neg	r5
+	bpt
+;
+	halt
+;
+	.end	start

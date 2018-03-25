@@ -1,0 +1,34 @@
+      1                                 ;
+      2                                 ; tests unaligned memory data references
+      3                                 ;
+      4                                 ; uses instructions MOV, HALT
+      5                                 ;
+      6                                 ; uses addressing modes 0, 6
+      7                                 ;
+      8 000000                                   .globl  start
+      9 000000  000010                  v1:      .word   10
+     10 000002     005                  v2:      .byte   5
+     11 000003     010                  v3:      .byte   10
+     12 000054                          . = . + 50
+     13                                 ;
+     14 000054  016701  177720          start:   mov     v1,r1
+     15 000060  016702  177717                   mov     v3,r2
+     16 000064  000000                           halt
+     17                                 ;
+     18 000066  000054'                          .end    start
+
+
+pc     = 000007 %  
+r0     = 000000 %  
+r1     = 000001 %  
+r2     = 000002 %  
+r3     = 000003 %  
+r4     = 000004 %  
+r5     = 000005 %  
+r6     = 000006 %  
+r7     = 000007 %  
+sp     = 000006 %  
+start    000054 RG 
+v1       000000 R  
+v2       000002 R  
+v3       000003 R  

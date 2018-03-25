@@ -5,3 +5,4 @@ set(CMAKE_CXX_STANDARD 98)
 
 add_subdirectory(archlib)
 add_subdirectory(p1)
+add_subdirectory(p2)

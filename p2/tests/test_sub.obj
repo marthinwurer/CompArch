@@ -1,0 +1,28 @@
+000 2 01 00
+002 2 ff ff
+004 2 05 00
+006 2 fb ff
+008 4 c1 ed f4 ff
+00c 2 03 00
+00e 4 c1 ed f2 ff
+012 2 03 00
+014 4 c1 ed ea ff
+018 2 03 00
+01a 4 c1 ed e8 ff
+01e 2 03 00
+020 4 c2 ed e2 ff
+024 4 c2 ed de ff
+028 2 03 00
+02a 4 c3 ed d6 ff
+02e 4 c3 ed d2 ff
+032 2 03 00
+034 4 c4 ed cc ff
+038 4 c4 ed ca ff
+03c 4 c4 ed c6 ff
+040 2 03 00
+042 4 c5 ed c0 ff
+046 4 c5 ed ba ff
+04a 4 c5 ed b6 ff
+04e 2 03 00
+050 2 00 00
+008

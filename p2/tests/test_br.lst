@@ -1,0 +1,38 @@
+      1                                 ;
+      2                                 ; tests BR
+      3                                 ;
+      4                                 ; uses instructions HALT
+      5                                 ;
+      6                                 ; uses only branch operands
+      7                                 ;
+      8 000000                                   .globl  start
+      9                                 ;
+     10 000000  000402                  start:   br      loc3
+     11 000002  000403                  loc1:    br      loc5
+     12 000004  000403                  loc2:    br      loc6
+     13 000006  000775                  loc3:    br      loc1
+     14 000010  000402                  loc4:    br      loc7
+     15 000012  000774                  loc5:    br      loc2
+     16 000014  000775                  loc6:    br      loc4
+     17 000016  000000                  loc7:    halt
+     18 000020  000000'                          .end    start
+
+
+loc1     000002 R  
+loc2     000004 R  
+loc3     000006 R  
+loc4     000010 R  
+loc5     000012 R  
+loc6     000014 R  
+loc7     000016 R  
+pc     = 000007 %  
+r0     = 000000 %  
+r1     = 000001 %  
+r2     = 000002 %  
+r3     = 000003 %  
+r4     = 000004 %  
+r5     = 000005 %  
+r6     = 000006 %  
+r7     = 000007 %  
+sp     = 000006 %  
+start    000000 RG 

@@ -1,0 +1,34 @@
+Important files:
+
+	header.mak	for use with 'gmakemake > Makefile'
+
+	*.asm		sample source programs
+	*.lst		sample program listings
+	*.obj		sample object programs
+	*.out		sample output files
+
+	RUN		script to run ./pdp11 against the object files
+
+Test files have the following naming convention:
+
+	handout.asm	sample program from the project specification
+	err_*.asm	test program that should generate an error
+	mode_*.asm	test program for that addressing mode
+	test_*.asm	test a single instruction
+
+I do have a PDP-11 assembler which can be used to create object files,
+but the object file generation process is rather cumbersome, so I have
+not put the assembler here.  If you want to create your own object
+files, send me email and I'll send you some instructions.
+
+The RUN script can be used to test your simulator against any or all of
+the supplied test programs.  It will run your simulator against one or
+more object files and compare the results against my sample output; if
+there are any differences, a difference listing will be generated.
+
+Run the script from inside the directory that contains your simulator.
+Here are some example commands:
+
+	RUN					run against all .obj files
+	RUN test_add.obj			run only test_add 
+	RUN test_add.obj test_sub.obj		run only these two tests

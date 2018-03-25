@@ -1,0 +1,13 @@
+CPU "ARCH" Simulator, 2.5a(Jan 22 2015)
+-----------------------------------------
+
+Memory sets starting address to 0
+000000:  PS[00]  000270  SEN
+000002:  PS[10]  000250  CLN
+000004:  PS[00]  000000  HALT
+
+Machine Halted - HALT instruction
+
+Simulated time 13 cycles
+
+LAST CPUObject DESTROYED; END OF SIMULATION
