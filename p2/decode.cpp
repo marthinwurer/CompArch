@@ -6,6 +6,7 @@
 #include <Clock.h>
 #include "decode.h"
 #include "addressing.h"
+#include "opcodes.h"
 
 void opcode_error(){
     mnemonic = "????";
@@ -97,10 +98,7 @@ void decode_1_op() {
 
     switch (opcode){
         case 0b000:
-            out.clear();
-            ps.backDoor(0b0100);
-            Clock::tick();
-            do_writeback = true;
+            operation = clear;
             break;
         case 0b001:
             break;

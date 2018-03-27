@@ -70,4 +70,13 @@ void setup(){
     sss.connectsTo(m.READ());
 
 
+    N.connectsTo(bitbus.OUT());
+    Z.connectsTo(bitbus.OUT());
+    V.connectsTo(bitbus.OUT());
+    C.connectsTo(bitbus.OUT());
+    C.connectsTo(alu.CARRY());
+    V.connectsTo(alu.OFLOW());
+    const_1.connectsTo(bitbus.IN());
+
+
 }

@@ -11,10 +11,14 @@ const unsigned int NUM_REGS = 8;
 Bus abus("ABUS", ADR_BITS); // address bus. Used when addresses are to be moved.
 Bus dbus("DBUS", DATA_BITS); // Data Bus. Used when data and instructions are to be moved.
 Bus sbus("DBUS", DATA_BITS); // Setup Bus. Used to set up the operands
+Bus bitbus("DBUS", DATA_BITS); // bus for setting status registers
 
 vector<Clearable*> regs;
 
-Clearable ps("PS", 4);
+Clearable N("N", 1);
+Clearable V("V", 1);
+Clearable C("C", 1);
+Clearable Z("Z", 1);
 Clearable sss("SSS", DATA_BITS);
 Clearable ddd("DDD", DATA_BITS);
 Clearable out("OUT", DATA_BITS);
@@ -27,6 +31,7 @@ BusALU addr_alu("A_ALU", ADR_BITS); // ALU
 
 StorageObject se_mask_12("SE12", ADR_BITS, 0x800);
 StorageObject const_2("CONST2", DATA_BITS, 2);
+StorageObject const_1("CONST2", 1, 1);
 
 bool halt(false);
 bool do_writeback(false);
