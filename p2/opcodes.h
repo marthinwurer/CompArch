@@ -7,4 +7,6 @@
 
 void clear();
 
+void mov();
+
 #endif //P1_OPCODES_H

@@ -17,6 +17,11 @@ void opcode_error(){
 void decode(ulong category) {
     cout << "cat " << bitset<3>(category) << endl; // todo
 
+    ulong s_am = ir.uvalue() >> 9 & 0b111;
+    ulong s_reg = ir.uvalue() >> 6 & 0b111;
+    ulong am = ir.uvalue() >> 3 & 0b111;
+    ulong reg = ir.uvalue() & 0b111;
+
     switch (category){
         case 000:
             // other instruction
@@ -25,7 +30,10 @@ void decode(ulong category) {
             break;
         case 001:
             // mov
-            opcode_error();
+            operation = mov;
+            mnemonic = "MOV";
+            calc_addressing(s_am, s_reg, src);
+            calc_addressing(am, reg, dest);
             break;
         case 002:
             // cmp
@@ -59,6 +67,7 @@ void decode_other() {
     // get the next bits
     ulong next = ir.uvalue() >> 9 & 0b111;
     cout << "next " << bitset<3>(next) << endl; // todo
+
 
     switch (next){
         case 00:

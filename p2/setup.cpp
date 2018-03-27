@@ -85,6 +85,8 @@ void setup(){
     out.connectsTo(alu.OUT());
     out.connectsTo(alu.OP1());
     out.connectsTo(alu.OP2());
+    out.connectsTo(m.WRITE());
+    out.connectsTo(m.READ());
 
 
 }
