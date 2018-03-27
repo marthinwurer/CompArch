@@ -3,6 +3,7 @@
 //
 
 #include <Clock.h>
+#include <sstream>
 #include "addressing.h"
 
 /**
@@ -34,21 +35,34 @@ bool calc_addressing(ulong am, ulong reg, struct am_data & data){
     data.inc = false;
     data.dec = false;
     data.D = false;
+
+    stringstream ss;
+
     switch (am){
         case 0:
             data.reg = reg;
             data.memory = false;
+            ss << "R" << reg;
+            data.mnemomic = ss.str();
             break;
         case 01:
+            ss << "(R" << reg << ")";
+            data.mnemomic = ss.str();
             break;
         case 02:
             data.inc = true;
+            ss << "(R" << reg << ")+";
+            data.mnemomic = ss.str();
             break;
         case 04:
             data.dec = true;
+            ss << "-(R" << reg << ")";
+            data.mnemomic = ss.str();
             break;
         case 06:
             data.D = true;
+            ss << "(R" << reg << ")";
+            data.mnemomic = ss.str();
             break;
         default:
             cout << "AHHHHHHHHHHHHHHHHHH" << endl;

@@ -12,7 +12,7 @@
 int main( int argc, char * argv[]) {
 
     CPUObject::debug |= CPUObject::trace | CPUObject::memload;
-    cout << hex;
+    cout << oct;
 
     // get command line input
     // taken from dumbest
@@ -44,12 +44,12 @@ int main( int argc, char * argv[]) {
         while (!halt) {
 
             // store trace info
-            XR = xr.uvalue();
-            pc = regs[7]->uvalue();
-
-            // START IF
             // get the addr for the printout
             addr = regs[7]->uvalue();
+            // get the ps
+            ps = (N.uvalue()<<3) | (Z.uvalue() <<2) | (V.uvalue() << 1) | (C.uvalue());
+
+            // START IF
 
             abus.IN().pullFrom(*regs[7]);
             m.MAR().latchFrom(abus.OUT());
@@ -78,12 +78,18 @@ int main( int argc, char * argv[]) {
 
             // call function pointer
 
+            operation();
+
+            if (dest.valid){
+                writeback(dest);
+            }
+
 
 
             ulong opcode = ir.uvalue() >> 12 & 0b1111;
             cout << " " << std::bitset<4>(category) << endl;
 
-            break;
+//            break;
 
             // mdr is now the correct value.
 //            cout << "mdr " << mdr.uvalue() << endl;
@@ -101,6 +107,11 @@ int main( int argc, char * argv[]) {
 
             // increment the pc
             if (!skip){
+                // inc pc
+                alu.perform(BusALU::op_add);
+                alu.OP1().pullFrom(*regs[7]);
+                alu.OP2().pullFrom(const_2);
+                regs[7]->latchFrom(alu.OUT());
                 Clock::tick();
             }
             print_trace();

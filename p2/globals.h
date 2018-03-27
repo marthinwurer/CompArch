@@ -24,6 +24,8 @@ struct am_data{
     bool inc;
     bool dec;
     bool D;
+    ulong D_addr;
+    string mnemomic;
 };
 
 extern struct am_data dest, src;
@@ -39,7 +41,7 @@ extern Bus sbus; // Setup Bus. Used to set up the operands
 
 extern vector<Clearable*> regs;
 
-extern Clearable ps, sss, ddd, out;
+extern Clearable sss, ddd, out;
 extern Clearable N, Z, V, C;
 extern StorageObject mdr;
 extern StorageObject xr;
@@ -51,7 +53,7 @@ extern BusALU addr_alu; // ALU
 extern bool halt, do_writeback;
 
 extern StorageObject se_mask_12, const_2, const_1;
-extern ulong pc, instruction, addr, A, B, XR;
+extern ulong ps, instruction, addr, A, B, XR;
 extern bool print_addr, bad_addr;
 extern string mnemonic;
 

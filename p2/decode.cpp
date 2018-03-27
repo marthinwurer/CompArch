@@ -25,21 +25,27 @@ void decode(ulong category) {
             break;
         case 001:
             // mov
+            opcode_error();
             break;
         case 002:
             // cmp
+            opcode_error();
             break;
         case 006:
             // add
+            opcode_error();
             break;
         case 007:
             // sob
+            opcode_error();
             break;
         case 010:
             // a non-relational conditional branch instruction
+            opcode_error();
             break;
         case 016:
             // sub
+            opcode_error();
             break;
         default:
             // todo
@@ -57,14 +63,19 @@ void decode_other() {
     switch (next){
         case 00:
             // a zero-operand instruction, br, rts, or jmp
+            opcode_error();
             break;
         case 01:
+            opcode_error();
             break;
         case 02:
+            opcode_error();
             break;
         case 03:
+            opcode_error();
             break;
         case 04:
+            opcode_error();
             break;
         case 05:
 //            cout << "clr, com, inc, dec, neg, or tst" << endl; // todo
@@ -99,16 +110,22 @@ void decode_1_op() {
     switch (opcode){
         case 0b000:
             operation = clear;
+            mnemonic = "CLR";
             break;
         case 0b001:
+            opcode_error();
             break;
         case 0b010:
+            opcode_error();
             break;
         case 0b011:
+            opcode_error();
             break;
         case 0b100:
+            opcode_error();
             break;
         case 0b111:
+            opcode_error();
             break;
         default:
             opcode_error();

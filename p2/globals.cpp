@@ -10,8 +10,8 @@ const unsigned int NUM_REGS = 8;
 
 Bus abus("ABUS", ADR_BITS); // address bus. Used when addresses are to be moved.
 Bus dbus("DBUS", DATA_BITS); // Data Bus. Used when data and instructions are to be moved.
-Bus sbus("DBUS", DATA_BITS); // Setup Bus. Used to set up the operands
-Bus bitbus("DBUS", DATA_BITS); // bus for setting status registers
+Bus sbus("SBUS", DATA_BITS); // Setup Bus. Used to set up the operands
+Bus bitbus("BITBUS", DATA_BITS); // bus for setting status registers
 
 vector<Clearable*> regs;
 
@@ -43,25 +43,41 @@ void (*operation)();
 
 
 // globals for trace printing
-ulong pc, instruction, addr, A, B, XR, PS;
+ulong ps, instruction, addr, A, B, XR, PS, displacement;
 bool print_addr, bad_addr, bkpt;
 string mnemonic;
 
 
+void print_am(struct am_data & am){
+    if( am.D){
+        cout << setfill('0') << setw(6) << oct << am.D_addr;
+    }
+    cout << am.mnemomic;
+}
+
+
 void print_trace() {
 
-    cout << setfill('0') << setw(3) << hex << pc << ":  ";
-    cout << setfill('0') << setw(5) << hex << instruction << "  ";
-    cout << setfill(' ') << left << setw(6) << mnemonic << right;
-    if (print_addr){
-        cout << setfill('0') << setw(3) << hex << addr << "  ";
-    } else if (bad_addr) {
-        cout << "???  ";
-    } else {
-        cout << "     ";
+    cout << setfill('0') << setw(6) << oct << addr << ":  PS[";
+    cout << setfill('0') << setw(2) << oct << ps << "]  ";
+    cout << setfill('0') << setw(6) << oct << instruction << "  ";
+    cout << setfill(' ') << left << setw(4) << mnemonic << right;
+
+    if (src.valid){
+        print_am(src);
+        cout << ",";
+    }
+    if (dest.valid){
+        print_am(dest);
     }
 
-    cout << "A[" << setfill('0') << setw(5) << hex << A << "]  ";
-    cout << "B[" << setfill('0') << setw(5) << hex << B << "]  ";
-    cout << "XR[" << setfill('0') << setw(3) << hex << XR << "]" << endl;
+//    if (print_addr) {
+//        cout << setfill('0') << setw(3) << hex << addr << "  ";
+//    } else if (bad_addr) {
+//        cout << "???  ";
+//    } else {
+//        cout << "     ";
+//    }
 }
+
+

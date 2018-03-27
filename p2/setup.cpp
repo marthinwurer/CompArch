@@ -69,6 +69,8 @@ void setup(){
     ddd.connectsTo(m.READ());
     sss.connectsTo(m.READ());
 
+    const_2.connectsTo(alu.OP1());
+    const_2.connectsTo(alu.OP2());
 
     N.connectsTo(bitbus.OUT());
     Z.connectsTo(bitbus.OUT());
@@ -77,6 +79,12 @@ void setup(){
     C.connectsTo(alu.CARRY());
     V.connectsTo(alu.OFLOW());
     const_1.connectsTo(bitbus.IN());
+
+    out.connectsTo(sbus.IN());
+    out.connectsTo(sbus.OUT());
+    out.connectsTo(alu.OUT());
+    out.connectsTo(alu.OP1());
+    out.connectsTo(alu.OP2());
 
 
 }
