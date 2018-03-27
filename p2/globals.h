@@ -26,6 +26,7 @@ struct am_data{
     bool D;
     ulong D_addr;
     string mnemomic;
+    bool writeback;
 };
 
 extern struct am_data dest, src;
@@ -54,7 +55,7 @@ extern bool halt, do_writeback;
 
 extern StorageObject se_mask_12, const_2, const_1;
 extern ulong ps, instruction, addr, A, B, XR;
-extern bool print_addr, bad_addr;
+extern bool print_addr, bad_addr, bkpt;
 extern string mnemonic;
 
 extern void (*operation)();

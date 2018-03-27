@@ -2,12 +2,15 @@
 // Created by benjamin on 3/24/18.
 //
 
+#include <sstream>
 #include "setup.h"
 #include "globals.h"
 
 void setup(){
     for( int ii = 0; ii < NUM_REGS; ii++){
-        regs.push_back(new Clearable("r"+ii, DATA_BITS));
+        stringstream ss;
+        ss << "R" << ii;
+        regs.push_back(new Clearable(ss.str().c_str(), DATA_BITS));
         regs[ii]->connectsTo(dbus.OUT());
         regs[ii]->connectsTo(dbus.IN());
         regs[ii]->connectsTo(abus.OUT());
@@ -45,10 +48,10 @@ void setup(){
 
     // connections required for addressing logic
     ir.connectsTo(abus.IN());
-    ir.connectsTo(addr_alu.OP1());
-    xr.connectsTo(addr_alu.OP2());
-    m.MAR().connectsTo(addr_alu.OUT());
-    m.MAR().connectsTo(addr_alu.OP1());
+    ir.connectsTo(alu.OP1());
+    xr.connectsTo(alu.OP2());
+    m.MAR().connectsTo(alu.OUT());
+    m.MAR().connectsTo(alu.OP1());
     m.MAR().connectsTo(m.READ());
 
     // connections required for alu logic

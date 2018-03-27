@@ -13,5 +13,7 @@ void decode_other();
 
 void decode_1_op();
 
+void decode_0_op();
+
 
 #endif //P1_DECODE_H

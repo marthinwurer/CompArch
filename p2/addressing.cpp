@@ -35,12 +35,13 @@ bool calc_addressing(ulong am, ulong reg, struct am_data & data){
     data.inc = false;
     data.dec = false;
     data.D = false;
+    data.reg = reg;
+    data.writeback = true;
 
     stringstream ss;
 
     switch (am){
         case 0:
-            data.reg = reg;
             data.memory = false;
             ss << "R" << reg;
             data.mnemomic = ss.str();
@@ -74,7 +75,8 @@ bool calc_addressing(ulong am, ulong reg, struct am_data & data){
 void load(struct am_data &am, StorageObject &dest) {
     StorageObject & reg = *regs[am.reg];
     if (am.memory){
-        if(dec){
+        if(am.dec){
+            cout << "decrementing reg " << am.reg << " " << am.mnemomic << endl;
             alu.perform(BusALU::op_sub);
             alu.OP1().pullFrom(reg);
             alu.OP2().pullFrom(const_2);
@@ -102,6 +104,8 @@ void load(struct am_data &am, StorageObject &dest) {
             alu.OP2().pullFrom(mdr);
             m.MAR().latchFrom(alu.OUT());
             Clock::tick();
+
+            am.D_addr = m.MAR().uvalue();
 
         }else{
             // basic version
@@ -132,9 +136,11 @@ void writeback(struct am_data &am) {
     StorageObject & reg = *regs[am.reg];
     if (am.memory) {
         // writeback
-        m.write();
-        m.WRITE().pullFrom(out);
-        Clock::tick();
+        if (am.writeback){
+            m.write();
+            m.WRITE().pullFrom(out);
+            Clock::tick();
+        }
 
         if (am.inc) {
             alu.perform(BusALU::op_add);
@@ -146,8 +152,10 @@ void writeback(struct am_data &am) {
     }
     else{
         // todo
-        sbus.IN().pullFrom(out);
-        reg.latchFrom(sbus.OUT());
-        Clock::tick();
+        if (am.writeback){
+            sbus.IN().pullFrom(out);
+            reg.latchFrom(sbus.OUT());
+            Clock::tick();
+        }
     }
 }

@@ -11,7 +11,7 @@
 
 int main( int argc, char * argv[]) {
 
-    CPUObject::debug |= CPUObject::trace | CPUObject::memload;
+//    CPUObject::debug |= CPUObject::trace | CPUObject::memload;
     cout << oct;
 
     // get command line input
@@ -68,9 +68,12 @@ int main( int argc, char * argv[]) {
             // get the instruction category
             ulong category = ir.uvalue() >> 12 & 0b1111;
             decode(category);
+            // END DECODE
 
             if (src.valid) {
                 load(src, sss);
+                src.writeback = false;
+                writeback(src); // catch increment in the src addressing mode
             }
             if (dest.valid) {
                 load(dest, ddd);
@@ -86,17 +89,10 @@ int main( int argc, char * argv[]) {
 
 
 
-            ulong opcode = ir.uvalue() >> 12 & 0b1111;
-            cout << " " << std::bitset<4>(category) << endl;
 
-//            break;
 
-            // mdr is now the correct value.
-//            cout << "mdr " << mdr.uvalue() << endl;
-            // END DECODE
 
             // find and execute the correct operation
-            bool skip;
 
 
 //            count++;
@@ -106,14 +102,12 @@ int main( int argc, char * argv[]) {
 //            }
 
             // increment the pc
-            if (!skip){
-                // inc pc
-                alu.perform(BusALU::op_add);
-                alu.OP1().pullFrom(*regs[7]);
-                alu.OP2().pullFrom(const_2);
-                regs[7]->latchFrom(alu.OUT());
-                Clock::tick();
-            }
+            // inc pc
+            alu.perform(BusALU::op_add);
+            alu.OP1().pullFrom(*regs[7]);
+            alu.OP2().pullFrom(const_2);
+            regs[7]->latchFrom(alu.OUT());
+            Clock::tick();
             print_trace();
         }
     }catch( ArchLibError & e){

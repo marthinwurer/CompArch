@@ -83,11 +83,14 @@ void print_trace() {
 
     if (bkpt){
         for ( int ii = 0; ii < 8; ii++){
-            cout << "  R" << ii << "[" << *regs[ii] << "]";
+            cout << "  " << *regs[ii];
             if ( ii == 3){
                 cout << endl;
             }
         }
+
+        cout << endl;
+        bkpt = false;
 
     }
 }

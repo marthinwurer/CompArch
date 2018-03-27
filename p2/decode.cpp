@@ -15,7 +15,7 @@ void opcode_error(){
 }
 
 void decode(ulong category) {
-    cout << "cat " << bitset<3>(category) << endl; // todo
+//    cout << "cat " << bitset<3>(category) << endl; // todo
 
     ulong s_am = ir.uvalue() >> 9 & 0b111;
     ulong s_reg = ir.uvalue() >> 6 & 0b111;
@@ -25,7 +25,7 @@ void decode(ulong category) {
     switch (category){
         case 000:
             // other instruction
-            cout << "decoding other" << endl;
+//            cout << "decoding other" << endl;
             decode_other();
             break;
         case 001:
@@ -57,7 +57,7 @@ void decode(ulong category) {
             break;
         default:
             // todo
-            cout << bitset<3>(category) << endl;
+//            cout << bitset<3>(category) << endl;
             opcode_error();
     }
 
@@ -66,13 +66,13 @@ void decode(ulong category) {
 void decode_other() {
     // get the next bits
     ulong next = ir.uvalue() >> 9 & 0b111;
-    cout << "next " << bitset<3>(next) << endl; // todo
+//    cout << "next " << bitset<3>(next) << endl; // todo
 
 
     switch (next){
         case 00:
             // a zero-operand instruction, br, rts, or jmp
-            opcode_error();
+            decode_0_op();
             break;
         case 01:
             opcode_error();
@@ -92,7 +92,7 @@ void decode_other() {
             break;
         default:
             // todo
-            cout << "000" << bitset<3>(next) << endl;
+//            cout << "000" << bitset<3>(next) << endl;
             opcode_error();
     }
 
@@ -108,7 +108,7 @@ TST	0057dd	0 000 101 111 ddd ddd	Test
  */
 void decode_1_op() {
     ulong opcode = ir.uvalue() >> 6 & 0b111;
-    cout << "opcode " << bitset<3>(opcode) << endl; // todo
+//    cout << "opcode " << bitset<3>(opcode) << endl; // todo
     ulong am = ir.uvalue() >> 3 & 0b111;
     ulong reg = ir.uvalue() & 0b111;
 
@@ -140,6 +140,76 @@ void decode_1_op() {
             opcode_error();
             break;
     }
+
+
+}
+
+/***
+HALT000000	0 000 000 000 000 000	Halt
+BPT	000003	0 000 000 000 000 011	Breakpoint
+JMP	0001dd	0 000 000 001 ddd ddd	Jump
+RTS	00020r	0 000 000 010 000 rrr	Return from subroutine
+NOP	000240	0 000 000 010 100 000	No operation
+CLC	000241	0 000 000 010 100 001	Clear C
+CLV	000242	0 000 000 010 100 010	Clear V
+CLZ	000244	0 000 000 010 100 100	Clear Z
+CLN	000250	0 000 000 010 101 000	Clear N
+CCC	000257	0 000 000 010 101 111	Clear condition code
+SEC	000261	0 000 000 010 110 001	Set C
+SEV	000262	0 000 000 010 110 010	Set V
+SEZ	000264	0 000 000 010 110 100	Set Z
+SEN	000270	0 000 000 010 111 000	Set N
+SCC	000277	0 000 000 010 111 111	Set condition code
+BR	0004vv	0 000 000 1vv vvv vvv	Branch
+ */
+void decode_0_op() {
+    // a zero-operand instruction, br, rts, or jmp
+    ulong next = ir.uvalue() >> 6 & 0b111;
+    ulong am = ir.uvalue() >> 3 & 0b111;
+    ulong reg = ir.uvalue() & 0b111;
+
+
+    switch (next){
+        case 00:
+            // a zero-operand instruction, br, rts, or jmp
+            if ( reg == 0){
+                // HALT
+                mnemonic = "HALT";
+                print_addr = false;
+
+
+                throw ArchLibError("HALT instruction");
+            } else if (reg == 0b011){
+//                cout << "BREAKPOINT" << endl;
+                mnemonic = "BPT";
+                bkpt = true;
+            }
+            else{
+                opcode_error();
+            }
+            break;
+        case 01:
+            opcode_error();
+            break;
+        case 02:
+            opcode_error();
+            break;
+        case 03:
+            opcode_error();
+            break;
+        case 04:
+            opcode_error();
+            break;
+        case 05:
+            opcode_error();
+            break;
+        default:
+            // todo
+//            cout << "nnext" << bitset<3>(next) << endl;
+            opcode_error();
+    }
+
+
 
 
 }
