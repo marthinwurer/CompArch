@@ -62,9 +62,22 @@ int main( int argc, char * argv[]) {
             // END IF
 
             // START DECODE
+            // set the operand validities to false
+            src.valid = false;
+            dest.valid = false;
             // get the instruction category
             ulong category = ir.uvalue() >> 12 & 0b1111;
             decode(category);
+
+            if (src.valid) {
+                load(src, sss);
+            }
+            if (dest.valid) {
+                load(dest, ddd);
+            }
+
+            // call function pointer
+
 
 
             ulong opcode = ir.uvalue() >> 12 & 0b1111;

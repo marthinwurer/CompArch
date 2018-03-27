@@ -62,5 +62,12 @@ void setup(){
 
     m.MAR().connectsTo(dbus.IN());
 
+    ddd.connectsTo(sbus.OUT());
+    ddd.connectsTo(sbus.IN());
+    sss.connectsTo(sbus.OUT());
+    sss.connectsTo(sbus.IN());
+    ddd.connectsTo(m.READ());
+    sss.connectsTo(m.READ());
+
 
 }

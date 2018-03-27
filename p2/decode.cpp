@@ -92,7 +92,7 @@ void decode_1_op() {
     ulong reg = ir.uvalue() & 0b111;
 
     // latch the data to a register
-    do_writeback = calc_addressing(am, *regs[reg], op1);
+    calc_addressing(am, reg, dest);
 
 
     switch (opcode){
@@ -100,6 +100,7 @@ void decode_1_op() {
             out.clear();
             ps.backDoor(0b0100);
             Clock::tick();
+            do_writeback = true;
             break;
         case 0b001:
             break;

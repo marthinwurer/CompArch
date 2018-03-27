@@ -7,6 +7,10 @@
 
 #include "globals.h"
 
-bool calc_addressing(ulong am, Clearable & reg, Clearable & final);
+bool calc_addressing(ulong am, ulong reg, struct am_data & data);
+
+void load(struct am_data & am, StorageObject & dest);
+void writeback(struct am_data & am);
+
 
 #endif //P1_ADDRESSING_H

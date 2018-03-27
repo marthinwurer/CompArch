@@ -15,6 +15,20 @@
 
 typedef unsigned long ulong;
 
+
+struct am_data{
+    bool valid;
+    ulong reg;
+    ulong am;
+    bool memory;
+    bool inc;
+    bool dec;
+    bool D;
+};
+
+extern struct am_data dest, src;
+
+
 extern const unsigned int ADR_BITS;
 extern const unsigned int DATA_BITS;
 extern const unsigned int NUM_REGS;
@@ -25,10 +39,7 @@ extern Bus sbus; // Setup Bus. Used to set up the operands
 
 extern vector<Clearable*> regs;
 
-extern Clearable ps;
-extern Clearable op1;
-extern Clearable op2;
-extern Clearable out;
+extern Clearable ps, sss, ddd, out;
 extern StorageObject mdr;
 extern StorageObject xr;
 extern StorageObject ir;
@@ -43,8 +54,11 @@ extern ulong pc, instruction, addr, A, B, XR;
 extern bool print_addr, bad_addr;
 extern string mnemonic;
 
+extern void (*operation)();
 
 void print_trace();
+
+
 
 
 
