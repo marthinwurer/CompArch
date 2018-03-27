@@ -6,6 +6,22 @@
 #include "globals.h"
 
 void setup(){
+    for( int ii = 0; ii < NUM_REGS; ii++){
+        regs.push_back(new Clearable("r"+ii, DATA_BITS));
+        regs[ii]->connectsTo(dbus.OUT());
+        regs[ii]->connectsTo(dbus.IN());
+        regs[ii]->connectsTo(abus.OUT());
+        regs[ii]->connectsTo(abus.IN());
+        regs[ii]->connectsTo(alu.OP1());
+        regs[ii]->connectsTo(alu.OP2());
+        regs[ii]->connectsTo(alu.OUT());
+        regs[ii]->connectsTo(sbus.IN());
+        regs[ii]->connectsTo(sbus.OUT());
+    }
+    regs[7]->connectsTo(m.READ());
+
+
+
     // setup
     // memory
 //    m.MAR().connectsTo(abus.IN());
@@ -18,18 +34,8 @@ void setup(){
 
 
     // accumulators
-    a.connectsTo(dbus.IN());
-    a.connectsTo(dbus.OUT());
-    a.connectsTo(alu.OP1());
-    b.connectsTo(dbus.IN());
-    b.connectsTo(dbus.OUT());
-    b.connectsTo(alu.OP1());
-
 
     // ic, ir, and xr
-    ic.connectsTo(abus.IN());
-    ic.connectsTo(abus.OUT());
-    ic.connectsTo(m.READ()); // hack to get start point
     xr.connectsTo(abus.IN());
     xr.connectsTo(abus.OUT());
 
@@ -46,8 +52,6 @@ void setup(){
     m.MAR().connectsTo(m.READ());
 
     // connections required for alu logic
-    a.connectsTo(alu.OUT());
-    b.connectsTo(alu.OUT());
     se_mask_12.connectsTo(alu.OP2());
     m.MAR().connectsTo(alu.OP1());
 
@@ -57,9 +61,6 @@ void setup(){
     xr.connectsTo(dbus.OUT());
 
     m.MAR().connectsTo(dbus.IN());
-    ic.connectsTo(dbus.OUT());
-    a.connectsTo(m.WRITE());
-    b.connectsTo(m.WRITE());
 
 
 }

@@ -6,7 +6,8 @@
 
 #include "globals.h"
 #include "addressing.h"
-#include "opcodes.h"
+#include "setup.h"
+#include "decode.h"
 
 int main( int argc, char * argv[]) {
 
@@ -23,6 +24,9 @@ int main( int argc, char * argv[]) {
     m.load( argv[1] );
 
 
+    setup();
+
+
 
 
 
@@ -31,7 +35,7 @@ int main( int argc, char * argv[]) {
 //    int count = 0;
 
     // entry point hack
-    ic.latchFrom(m.READ());
+    regs[7]->latchFrom(m.READ());
     Clock::tick();
 
     try {
@@ -40,14 +44,14 @@ int main( int argc, char * argv[]) {
         while (!halt) {
 
             // store trace info
-            A = a.uvalue();
-            B = b.uvalue();
             XR = xr.uvalue();
-            pc = ic.uvalue();
+            pc = regs[7]->uvalue();
 
             // START IF
-//        cout << "latch from read" << endl;
-            abus.IN().pullFrom(ic);
+            // get the addr for the printout
+            addr = regs[7]->uvalue();
+
+            abus.IN().pullFrom(*regs[7]);
             m.MAR().latchFrom(abus.OUT());
             m.read();
             Clock::tick();
@@ -58,24 +62,22 @@ int main( int argc, char * argv[]) {
             // END IF
 
             // START DECODE
-            // get the addressing mode
-            ulong am = ir.uvalue() >> 18;
-            ulong opcode = ir.uvalue() >> 12 & 0b111111;
-//            cout << am << " " << std::bitset<6>(opcode) << endl; // todo
+            // get the instruction category
+            ulong category = ir.uvalue() >> 12 & 0b1111;
+            decode(category);
 
-            // compute the addressing mode
-            calc_addressing(am);
-//            calc_addressing(0b00);
-//            calc_addressing(0b01);
-//            calc_addressing(0b10);
-//            calc_addressing(0b11);
+
+            ulong opcode = ir.uvalue() >> 12 & 0b1111;
+            cout << " " << std::bitset<4>(category) << endl;
+
+            break;
 
             // mdr is now the correct value.
 //            cout << "mdr " << mdr.uvalue() << endl;
             // END DECODE
 
             // find and execute the correct operation
-            bool skip = exec_opcode(opcode, am);
+            bool skip;
 
 
 //            count++;
@@ -86,7 +88,6 @@ int main( int argc, char * argv[]) {
 
             // increment the pc
             if (!skip){
-                ic.incr();
                 Clock::tick();
             }
             print_trace();
@@ -97,6 +98,11 @@ int main( int argc, char * argv[]) {
     }
 
     // teardown
+
+    // free all the registers
+    for( int ii = 0; ii < NUM_REGS; ii++){
+        delete regs[ii];
+    }
 
     return 0;
 }

@@ -6,65 +6,85 @@
 #include "addressing.h"
 
 /**
-K19 addressing modes are used to calculate the Effective Address (EA) for memory operands as follows:
+The PDP-11 supports eight addressing modes. Each operand is represented
+in the instruction word with a three-bit mode specifier, followed by a
+three-bit register designator. Some modes require an additional word of
+ information, called the extension, in the instruction sequence.
 
-Code	Name	    Description
-00	    Direct	    EA is the contents of the address field.
-01  	Indexed	    EA is the sum of the address field and the XR register.
-10  	Indirect	The address field contains the address of an indirect word in memory; EA is the contents of the least significant 12 bits of that word.
-11  	Indirect    indexed	The address field contains the address of an indirect word in memory; EA is the sum of the least significant 12 bits of that word and the XR register.
+Here are descriptions of the addressing modes when R0-R6 are used:
+
+Mode	Name	            Assembler	Extension?	Effective Address (EA) Computed As
+0	    register	        Rn	        none	    Rn (not a memory address)
+1   	reg. deferred	    (Rn)	    none	    contents of Rn
+2   	autoincrement	    (Rn)+	    none	    contents of Rn, before increment of Rn
+3   	autoinc. deferred	@(Rn)+	    none	    contents of indirect word in memory pointed at by Rn, before increment of Rn
+4   	autodecrement	    -(Rn)	    none	    contents of Rn, after decrement of Rn
+5   	autodec. deferred	@-(Rn)	    none	    contents of indirect word in memory pointed at by Rn, after decrement of Rn
+6   	displacement	    D(Rn)	    16-bit D	D + contents of Rn
+7   	disp. deferred	    @D(Rn)	    16-bit D	contents of indirect word in memory pointed at by (D + contents of Rn)
 
  * @param am
  */
-void calc_addressing(ulong am) {
+bool calc_addressing(ulong am, Clearable & reg, Clearable & into) {
+    bool from_memory = false;
+    bool inc = false;
+    bool dec = false;
+    bool D = false;
 
+    // 0 (register), 1 (register deferred), 2 (autoincrement), 4 (autodecrement), 6 (displacement)
     switch (am){
-        case 0b00:
-            abus.IN().pullFrom(ir);
-            m.MAR().latchFrom(abus.OUT());
+        case 0:
+            sbus.IN().pullFrom(reg);
+            into.latchFrom(sbus.OUT());
             Clock::tick();
             break;
-        case 0b01:
-            m.MAR().latchFrom(addr_alu.OUT());
-            addr_alu.OP1().pullFrom(ir);
-            addr_alu.OP2().pullFrom(xr);
-            addr_alu.perform(BusALU::op_add);
-            Clock::tick();
+        case 01:
+            from_memory = true;
             break;
-        case 0b10:
-            abus.IN().pullFrom(ir);
-            m.MAR().latchFrom(abus.OUT());
-            Clock::tick();
-            m.MAR().latchFrom(m.READ());
-            m.read();
-            Clock::tick();
+        case 02:
+            from_memory = true;
+            inc = true;
             break;
-        case 0b11:
-            abus.IN().pullFrom(ir);
-            m.MAR().latchFrom(abus.OUT());
-            Clock::tick();
-            m.MAR().latchFrom(m.READ());
-            m.read();
-            Clock::tick();
-            m.MAR().latchFrom(addr_alu.OUT());
-            addr_alu.OP1().pullFrom(m.MAR());
-            addr_alu.OP2().pullFrom(xr);
-            addr_alu.perform(BusALU::op_add);
-            Clock::tick();
-
-
+        case 04:
+            from_memory = true;
+            dec = true;
             break;
-
+        case 06:
+            from_memory = true;
+            D = true;
+            break;
         default:
             cout << "AHHHHHHHHHHHHHHHHHH" << endl;
             throw ArchLibError("AAAAAHHHHHH");
 
     }
 
-    addr = m.MAR().uvalue();
+    if (from_memory){
+        if(dec){
+            alu.perform(BusALU::op_add);
+            alu.OP1().pullFrom(reg);
+            alu.OP2().pullFrom(const_2);
+            reg.latchFrom(alu.OUT());
+            Clock::tick();
+        }
+
+        // load the mar
+        abus.IN().pullFrom(reg);
+        m.MAR().latchFrom(abus.OUT());
+        Clock::tick();
+        // load the data into the op
+        into.latchFrom(m.READ());
+        m.read();
+
+        // todo
+
+
+    }
+
 
     m.read();
     mdr.latchFrom(m.READ());
     Clock::tick();
+    return from_memory;
 
 }

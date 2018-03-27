@@ -7,6 +7,6 @@
 
 #include "globals.h"
 
-void calc_addressing(ulong am);
+bool calc_addressing(ulong am, Clearable & reg, Clearable & final);
 
 #endif //P1_ADDRESSING_H

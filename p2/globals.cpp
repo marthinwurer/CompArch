@@ -4,29 +4,36 @@
 
 #include <iomanip>
 #include "globals.h"
-const unsigned int ADR_BITS = 12;
-const unsigned int DATA_BITS = 20;
+const unsigned int ADR_BITS = 16;
+const unsigned int DATA_BITS = 16;
+const unsigned int NUM_REGS = 8;
 
 Bus abus("ABUS", ADR_BITS); // address bus. Used when addresses are to be moved.
 Bus dbus("DBUS", DATA_BITS); // Data Bus. Used when data and instructions are to be moved.
+Bus sbus("DBUS", DATA_BITS); // Setup Bus. Used to set up the operands
 
-Clearable a("A", DATA_BITS); // Accumulator A
-Clearable b("B", DATA_BITS); // Accumulator B
+vector<Clearable*> regs;
+
+Clearable ps("PS", 4);
+Clearable op1("OP1", DATA_BITS);
+Clearable op2("OP2", DATA_BITS);
+Clearable out("OUT", DATA_BITS);
 StorageObject mdr("MDR", DATA_BITS); // Data to be written into, or data most recently read from, memory.
 StorageObject ir("IR", DATA_BITS); // Instruction Register. Instruction being decoded and executed.
 StorageObject xr("XR", ADR_BITS); // Index register. Contains a value to be used in calculating a memory address.
-Counter ic("IC", ADR_BITS); // PC. Address of the next instruction to be fetched, decoded, and executed.
-Memory m("Memory", ADR_BITS, DATA_BITS); // Memory
+Memory m("Memory", 16, 8, -1, 2, true); // Memory
 BusALU alu("ALU", DATA_BITS); // ALU
 BusALU addr_alu("A_ALU", ADR_BITS); // ALU
 
 StorageObject se_mask_12("SE12", ADR_BITS, 0x800);
+StorageObject const_2("CONST2", DATA_BITS, 2);
 
 bool halt(false);
+bool do_writeback(false);
 
 // globals for trace printing
-ulong pc, instruction, addr, A, B, XR;
-bool print_addr, bad_addr;
+ulong pc, instruction, addr, A, B, XR, PS;
+bool print_addr, bad_addr, bkpt;
 string mnemonic;
 
 

@@ -6,6 +6,7 @@
 #define P1_GLOBALS_H
 
 
+#include <vector>
 #include <Bus.h>
 #include <Counter.h>
 #include <Memory.h>
@@ -16,23 +17,28 @@ typedef unsigned long ulong;
 
 extern const unsigned int ADR_BITS;
 extern const unsigned int DATA_BITS;
+extern const unsigned int NUM_REGS;
 
 extern Bus abus;
 extern Bus dbus;
+extern Bus sbus; // Setup Bus. Used to set up the operands
 
-extern Clearable a;
-extern Clearable b;
+extern vector<Clearable*> regs;
+
+extern Clearable ps;
+extern Clearable op1;
+extern Clearable op2;
+extern Clearable out;
 extern StorageObject mdr;
 extern StorageObject xr;
 extern StorageObject ir;
-extern Counter ic;
 extern Memory m;
 extern BusALU alu;
 extern BusALU addr_alu; // ALU
 
-extern bool halt;
+extern bool halt, do_writeback;
 
-extern StorageObject se_mask_12;
+extern StorageObject se_mask_12, const_2;
 extern ulong pc, instruction, addr, A, B, XR;
 extern bool print_addr, bad_addr;
 extern string mnemonic;
