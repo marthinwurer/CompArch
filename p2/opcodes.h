@@ -17,6 +17,7 @@ void sob();
 void br();
 void inc();
 void dec();
+void ccodes();
 
 
 #endif //P1_OPCODES_H

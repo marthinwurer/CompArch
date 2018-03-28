@@ -195,6 +195,45 @@ void dec() {
 
 }
 
+void ccodes() {
+    /*
+    NOP	000240	0 000 000 010 100 000	No operation
+    CLC	000241	0 000 000 010 100 001	Clear C
+    CLV	000242	0 000 000 010 100 010	Clear V
+    CLZ	000244	0 000 000 010 100 100	Clear Z
+    CLN	000250	0 000 000 010 101 000	Clear N
+    CCC	000257	0 000 000 010 101 111	Clear condition code
+    SEC	000261	0 000 000 010 110 001	Set C
+    SEV	000262	0 000 000 010 110 010	Set V
+    SEZ	000264	0 000 000 010 110 100	Set Z
+    SEN	000270	0 000 000 010 111 000	Set N
+    SCC	000277	0 000 000 010 111 111	Set condition code
+     */
+
+    ulong code = ir(3,0);
+//    cout << code << endl;
+    ulong op = ir(4);
+
+    if (op == 0 && code == 0){
+        mnemonic = "NOP";
+        return;
+    }
+
+    // set
+    if (op == 0){
+        switch (code){
+            case 0b0001:
+                break;
+        }
+
+    }
+
+
+
+
+
+}
+
 
 
 

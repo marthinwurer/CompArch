@@ -214,7 +214,7 @@ void decode_0_op() {
             break;
         case 02:
             // cc stuff and rts
-            opcode_error();
+            operation = ccodes;
             break;
         case 03:
             opcode_error();
