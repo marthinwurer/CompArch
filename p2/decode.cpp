@@ -36,7 +36,11 @@ void decode(ulong category) {
             break;
         case 002:
             // cmp
-            opcode_error();
+            // CMP	02ssdd	0 010 sss sss ddd ddd	Compare
+            operation = cmp;
+            mnemonic = "CMP";
+            calc_addressing(s_am, s_reg, src);
+            calc_addressing(am, reg, dest);
             break;
         case 006:
             // add

@@ -24,7 +24,6 @@ void clear() {
     V.clear();
     C.clear();
     Clock::tick();
-    do_writeback = true;
 }
 
 void mov() {
@@ -49,6 +48,7 @@ void add() {
     bitbus.IN().pullFrom(const_1);
     setbit(N, out(DATA_BITS - 1) == 1);
     setbit(Z, out.uvalue() == 0);
+    Clock::tick();
 
 }
 
@@ -66,11 +66,12 @@ void sub() {
      */
 
     bitbus.IN().pullFrom(const_1);
-    setbit(N, out(DATA_BITS - 1) == 1);
+    setbit(N, out() == 1);
     setbit(Z, out.uvalue() == 0);
-    setbit(V, ((ddd(DATA_BITS-1) ^ sss(DATA_BITS-1)) == 1) && (sss(DATA_BITS-1) == out(DATA_BITS-1)));
+    setbit(V, ((ddd() ^ sss()) == 1) && (sss() == out()));
 //    cout << (ddd.uvalue()) << " " << (~(sss.uvalue()) & 0xFFFF) << " " << (1 << 16) << endl;
     setbit(C, ((ddd.uvalue()) + (~(sss.uvalue()) & 0xFFFF) + 1) < 1<<16);
+    Clock::tick();
 
 }
 
@@ -80,7 +81,7 @@ void bgt() {
     imm = true;
     immediate = (char) ir(7, 0);
 //    cout <<dec << immediate<<endl;
-    cout <<bitset<8>(immediate)<<endl;
+//    cout <<bitset<8>(immediate)<<endl;
     // sign extend
 //    if (immediate & 1<<7){
 //        immediate |= 0b1111111110000000;
@@ -98,6 +99,41 @@ void bgt() {
 }
 
 void pass() {
+
+}
+
+void cmp() {
+    alu.perform(BusALU::op_sub);
+    alu.OP1().pullFrom(sss);
+    alu.OP2().pullFrom(ddd);
+    out.latchFrom(alu.OUT());
+//    cout << out<< endl;
+    Clock::tick();
+//    cout << out<< endl;
+    dest.writeback = false;
+    /* "result" is (src) - (dst)
+     * 	N <- result < 0
+		Z <- result == 0
+		V <- opnds had different signs & result has sign of (dst)
+		C <- (src) + ~(dst) + 1 < 2^16
+     sub*	N <- result < 0
+		Z <- result == 0
+		V <- opnds had different signs & result has sign of (src)
+		C <- (dst) + ~(src) + 1 < 2^16
+     */
+
+    bitbus.IN().pullFrom(const_1);
+    setbit(N, out() == 1);
+//    cout << bitset<16>(sss.uvalue())<< " " << bitset<16>(sss.uvalue()) << endl;
+//    cout << (short) sss.uvalue() - (short) ddd.uvalue() << endl;
+//    cout << sss<< endl;
+//    cout << ddd<< endl;
+//    cout << out<< endl;
+    setbit(Z, out.uvalue() == 0);
+    setbit(V, ((ddd() ^ sss()) == 1) && (ddd() == out()));
+//    cout << (ddd.uvalue()) << " " << (~(sss.uvalue()) & 0xFFFF) << " " << (1 << 16) << endl;
+    setbit(C, ((sss.uvalue()) + (~(ddd.uvalue()) & 0xFFFF) + 1) < 1<<16);
+    Clock::tick();
 
 }
 

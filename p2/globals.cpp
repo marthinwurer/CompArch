@@ -25,7 +25,7 @@ Clearable out("OUT", DATA_BITS);
 StorageObject mdr("MDR", DATA_BITS); // Data to be written into, or data most recently read from, memory.
 StorageObject ir("IR", DATA_BITS); // Instruction Register. Instruction being decoded and executed.
 StorageObject xr("XR", ADR_BITS); // Index register. Contains a value to be used in calculating a memory address.
-StorageObject immr("IMMR", ADR_BITS);
+StorageObject immr("IMMR", DATA_BITS);
 Memory m("Memory", 16, 8, -1, 2, true); // Memory
 BusALU alu("ALU", DATA_BITS); // ALU
 BusALU addr_alu("A_ALU", ADR_BITS); // ALU

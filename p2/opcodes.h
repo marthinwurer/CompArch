@@ -12,6 +12,7 @@ void mov();
 void add();
 void sub();
 void bgt();
+void cmp();
 
 
 #endif //P1_OPCODES_H
