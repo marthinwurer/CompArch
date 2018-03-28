@@ -6,6 +6,15 @@
 #include <sstream>
 #include "addressing.h"
 
+
+void check_addressing(){
+    if (m.MAR()(0) == 1){
+        // unaligned memory access
+        throw ArchLibError("unaligned memory access");
+
+    }
+}
+
 /**
 The PDP-11 supports eight addressing modes. Each operand is represented
 in the instruction word with a three-bit mode specifier, followed by a
@@ -98,6 +107,7 @@ void load(struct am_data &am, StorageObject &dest) {
             // load memory into mdr, then add with reg and store in mar
             m.read();
             mdr.latchFrom(m.READ());
+            check_addressing();
             Clock::tick();
 
             alu.perform(BusALU::op_add);
@@ -120,6 +130,8 @@ void load(struct am_data &am, StorageObject &dest) {
         // load the data into the op
         dest.latchFrom(m.READ());
         m.read();
+        check_addressing();
+        Clock::tick();
     }
     else{
         sbus.IN().pullFrom(reg);
@@ -140,6 +152,7 @@ void writeback(struct am_data &am) {
         if (am.writeback){
             m.write();
             m.WRITE().pullFrom(out);
+            check_addressing();
             Clock::tick();
         }
 

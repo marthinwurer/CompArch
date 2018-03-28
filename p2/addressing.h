@@ -7,6 +7,7 @@
 
 #include "globals.h"
 
+void check_addressing();
 bool calc_addressing(ulong am, ulong reg, struct am_data & data);
 
 void load(struct am_data & am, StorageObject & dest);

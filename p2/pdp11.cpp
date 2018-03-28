@@ -56,6 +56,7 @@ int main( int argc, char * argv[]) {
             abus.IN().pullFrom(*regs[7]);
             m.MAR().latchFrom(abus.OUT());
             m.read();
+            check_addressing();
             Clock::tick();
             m.read();
             ir.latchFrom(m.READ());
