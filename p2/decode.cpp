@@ -10,8 +10,9 @@
 
 void opcode_error(){
     mnemonic = "????";
-    print_addr = false;
-    throw ArchLibError("undefined opcode");
+//    print_addr = false;
+    bad_addr = true;
+    throw ArchLibError("opcode error");
 }
 
 void decode(ulong category) {
@@ -52,7 +53,10 @@ void decode(ulong category) {
             break;
         case 007:
             // sob
-            opcode_error();
+            //SOB	077rnn	0 111 111 rrr nnn nnn	Subtract one and branch
+            operation = sob;
+            mnemonic = "SOB";
+            calc_addressing(0, s_reg, src);
             break;
         case 010:
             // a non-relational conditional branch instruction
@@ -203,24 +207,28 @@ void decode_0_op() {
             }
             break;
         case 01:
+            // JMP
             opcode_error();
             break;
         case 02:
+            // cc stuff and rts
             opcode_error();
             break;
         case 03:
             opcode_error();
             break;
-        case 04:
-            opcode_error();
-            break;
-        case 05:
-            opcode_error();
-            break;
         default:
             // todo
+            if (next & 0b100){
+                // br
+                mnemonic = "BR";
+                operation = br;
+
+            }else{
 //            cout << "nnext" << bitset<3>(next) << endl;
-            opcode_error();
+                opcode_error();
+
+            }
     }
 
 

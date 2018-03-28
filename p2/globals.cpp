@@ -79,7 +79,12 @@ void print_trace() {
 
 
 
-    cout << " " << setfill(' ') << left << setw(3) << mnemonic << right;
+    if (! bad_addr){
+        cout << " " << setfill(' ') << left << mnemonic << right;
+    } else {
+        cout << " " << setfill(' ') << left << setw(3) << "????" << right;
+        bad_addr = false;
+    }
 
     if (src.valid || dest.valid){
         cout << " ";

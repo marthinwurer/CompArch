@@ -1,40 +1,16 @@
-Important files:
 
-	header.mak	for use with 'makemake > Makefile'
+I procrastinated too much. That being said, I only figured out my final architechture
+the night before my second extension was due. The complex addressing modes killed me
+and I coudn't think my way through them.
 
-	*.asm		sample source programs
-	*.obj		sample object programs
-	*.out5		sample 520 output files
-	*.out7		sample 720 output files
+Opcodes were far more challenging than they should have been. I spent an hour trying to
+figure out what was wrong with my cmp before I just gave up. For some reason the ALU subtraction was
+not working correctly. I'm really at a loss as to why that was happening.
 
-	RUN		script to run k19 against the object files
+Backdoors are used in branches because I'm not sure how else to do the math for branches without
+killing myself. Speaking of branches, I'm having issues getting my branch values to match yours.
+Even looking at the bits of the opcodes, they are not the values in your output files.
 
-Test files have the following naming convention:
 
-	handout.asm	sample program from the project specification
-	test-*.asm	test a single instruction
-	*-i.asm		test indirect addressing
-	*-x.asm		test indexed addressing
-	*-ix.asm	test indirect indexed addressing
 
-You can create your own object files by using the simple assembler found
-in the project's pub directory, /usr/local/dcs/pub/wrc/courses/csci453/k19.
-See the README.k19asm file there for details.  Please remember that this
-assembler is very simple, and is unlikely to work correctly if given
-bad input (e.g., syntax errors in the assembly language code).
 
-The RUN script can be used to test your simulator against any or all of
-the supplied test programs.  It will run your simulator against one or
-more object files and compare the results against my sample output; if
-there are any differences, a difference listing will be generated.
-
-The script can be invoked with zero or more object file names.  If any
-names are given, only those files will be tested; if no names are given,
-all object files will be tested.
-
-Run the script from inside the directory that contains your simulator.
-Here are some example commands:
-
-	./RUN					run against all .obj files
-	./RUN test-adda.obj			run only test-adda 
-	./RUN test-adda.obj test-subb.obj	run only these two tests

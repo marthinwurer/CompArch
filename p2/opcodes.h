@@ -13,6 +13,8 @@ void add();
 void sub();
 void bgt();
 void cmp();
+void sob();
+void br();
 
 
 #endif //P1_OPCODES_H

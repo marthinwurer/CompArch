@@ -88,6 +88,7 @@ void bgt() {
 //    }
 //    cout <<dec << immediate<<endl;
     immediate *= 2;
+    immediate -= 2;
 //    cout <<dec << immediate<<endl;
     if ( Z.uvalue() == 0 && (N.uvalue() == V.uvalue())){
         regs[7]->backDoor((short)regs[7]->uvalue() + immediate);
@@ -136,6 +137,26 @@ void cmp() {
     Clock::tick();
 
 }
+
+void sob() {
+    //SOB	077rnn	0 111 111 rrr nnn nnn	Subtract one and branch
+
+    // sob	077rnn	r <- r - 1; if( new r != 0 ) PC <- PC - 2*nn
+
+}
+
+void br() {
+    // br	0004vv	PC <- PC + 2*vv
+    imm = true;
+    immediate = (char) ir(7, 0);
+    immediate *= 2;
+//    immediate -= 2;
+    regs[7]->backDoor((short)regs[7]->uvalue() + immediate);
+    Clock::tick();
+
+}
+
+
 
 
 
