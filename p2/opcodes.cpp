@@ -156,6 +156,45 @@ void br() {
 
 }
 
+/*
+ * INC	0052dd	0 000 101 010 ddd ddd	Increment
+ * inc*	N <- result < 0
+		Z <- result == 0
+		V <- (dst) was MPI
+		C is unchanged
+
+ inc	0052dd	dd <- dd + 1
+ */
+void inc() {
+    alu.perform(BusALU::op_add);
+    alu.OP1().pullFrom(ddd);
+    alu.OP2().pullFrom(const_01);
+    out.latchFrom(alu.OUT());
+    Clock::tick();
+
+    bitbus.IN().pullFrom(const_1);
+    setbit(N, out(DATA_BITS - 1) == 1);
+    setbit(Z, out.uvalue() == 0);
+    setbit(V, ddd.uvalue() == 077777);
+    Clock::tick();
+
+}
+
+void dec() {
+    alu.perform(BusALU::op_sub);
+    alu.OP1().pullFrom(ddd);
+    alu.OP2().pullFrom(const_01);
+    out.latchFrom(alu.OUT());
+    Clock::tick();
+
+    bitbus.IN().pullFrom(const_1);
+    setbit(N, out(DATA_BITS - 1) == 1);
+    setbit(Z, out.uvalue() == 0);
+    setbit(V, ddd.uvalue() == 0100000);
+    Clock::tick();
+
+}
+
 
 
 

@@ -32,7 +32,8 @@ BusALU addr_alu("A_ALU", ADR_BITS); // ALU
 
 StorageObject se_mask_12("SE12", ADR_BITS, 0x800);
 StorageObject const_2("CONST2", DATA_BITS, 2);
-StorageObject const_1("CONST2", 1, 1);
+StorageObject const_01("CONST01", DATA_BITS, 1);
+StorageObject const_1("CONST1", 1, 1);
 
 bool halt(false);
 bool do_writeback(false);

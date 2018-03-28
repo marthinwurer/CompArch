@@ -141,10 +141,12 @@ void decode_1_op() {
             opcode_error();
             break;
         case 0b010:
-            opcode_error();
+            operation = inc;
+            mnemonic = "INC";
             break;
         case 0b011:
-            opcode_error();
+            operation = dec;
+            mnemonic = "DEC";
             break;
         case 0b100:
             opcode_error();

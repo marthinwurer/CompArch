@@ -15,6 +15,8 @@ void bgt();
 void cmp();
 void sob();
 void br();
+void inc();
+void dec();
 
 
 #endif //P1_OPCODES_H
