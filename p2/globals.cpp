@@ -43,8 +43,8 @@ void (*operation)();
 
 
 // globals for trace printing
-ulong ps, instruction, addr, A, B, XR, PS, displacement;
-bool print_addr, bad_addr, bkpt;
+ulong ps, instruction, addr, A, B, XR, PS, displacement, extra_val;
+bool print_addr, bad_addr, bkpt, extra_addr;
 string mnemonic;
 
 
@@ -60,7 +60,23 @@ void print_trace() {
 
     cout << setfill('0') << setw(6) << oct << addr << ":  PS[";
     cout << setfill('0') << setw(2) << oct << ps << "]  ";
-    cout << setfill('0') << setw(6) << oct << instruction << "  ";
+    if (print_addr) {
+        cout << setfill('0') << setw(6) << oct << instruction << "  ";
+    } else if (bad_addr) {
+        cout << "???? ";
+    } else {
+        cout << "     ";
+    }
+    if( src.D){
+        cout << setfill('0') << setw(6) << oct << src.D_addr << "  ";
+    }
+    if( dest.D){
+        cout << setfill('0') << setw(6) << oct << dest.D_addr << "  ";
+    }
+
+
+
+
     cout << setfill(' ') << left << setw(4) << mnemonic << right;
 
     if (src.valid){

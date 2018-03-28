@@ -98,6 +98,8 @@ void load(struct am_data &am, StorageObject &dest) {
             m.read();
             mdr.latchFrom(m.READ());
             Clock::tick();
+            extra_addr = true;
+            extra_val = mdr.uvalue();
 
             alu.perform(BusALU::op_add);
             alu.OP1().pullFrom(reg);
@@ -105,7 +107,7 @@ void load(struct am_data &am, StorageObject &dest) {
             m.MAR().latchFrom(alu.OUT());
             Clock::tick();
 
-            am.D_addr = m.MAR().uvalue();
+            am.D_addr = mdr.uvalue();
 
         }else{
             // basic version

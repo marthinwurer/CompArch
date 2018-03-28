@@ -25,7 +25,6 @@ void decode(ulong category) {
     switch (category){
         case 000:
             // other instruction
-//            cout << "decoding other" << endl;
             decode_other();
             break;
         case 001:

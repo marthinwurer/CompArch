@@ -48,6 +48,7 @@ int main( int argc, char * argv[]) {
             addr = regs[7]->uvalue();
             // get the ps
             ps = (N.uvalue()<<3) | (Z.uvalue() <<2) | (V.uvalue() << 1) | (C.uvalue());
+            print_addr = true;
 
             // START IF
 
@@ -64,7 +65,10 @@ int main( int argc, char * argv[]) {
             // START DECODE
             // set the operand validities to false
             src.valid = false;
+            src.D = false;
             dest.valid = false;
+            dest.D = false;
+
             // get the instruction category
             ulong category = ir.uvalue() >> 12 & 0b1111;
             decode(category);

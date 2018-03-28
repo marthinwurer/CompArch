@@ -18,9 +18,9 @@ void setbit(Clearable & s, bool val){
 void clear() {
     out.clear();
     N.clear();
-    Z.clear();
     bitbus.IN().pullFrom(const_1);
-    V.latchFrom(bitbus.OUT());
+    Z.latchFrom(bitbus.OUT());
+    V.clear();
     C.clear();
     Clock::tick();
     do_writeback = true;

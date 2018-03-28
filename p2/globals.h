@@ -54,8 +54,8 @@ extern BusALU addr_alu; // ALU
 extern bool halt, do_writeback;
 
 extern StorageObject se_mask_12, const_2, const_1;
-extern ulong ps, instruction, addr, A, B, XR;
-extern bool print_addr, bad_addr, bkpt;
+extern ulong ps, instruction, addr, A, B, XR, extra_val;
+extern bool print_addr, bad_addr, bkpt, extra_addr;
 extern string mnemonic;
 
 extern void (*operation)();
