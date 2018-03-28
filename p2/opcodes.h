@@ -6,7 +6,12 @@
 #define P1_OPCODES_H
 
 void clear();
+void pass();
 
 void mov();
+void add();
+void sub();
+void bgt();
+
 
 #endif //P1_OPCODES_H

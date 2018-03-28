@@ -86,20 +86,19 @@ void load(struct am_data &am, StorageObject &dest) {
 
         // if D is set, then inc pc, load from there, then add
         if (am.D){
-            // inc pc and load value into mar
+            // inc pc and load previous value into mar
             alu.perform(BusALU::op_add);
             alu.OP1().pullFrom(*regs[7]);
             alu.OP2().pullFrom(const_2);
             regs[7]->latchFrom(alu.OUT());
-            m.MAR().latchFrom(alu.OUT());
+            abus.IN().pullFrom(*regs[7]);
+            m.MAR().latchFrom(abus.OUT());
             Clock::tick();
 
             // load memory into mdr, then add with reg and store in mar
             m.read();
             mdr.latchFrom(m.READ());
             Clock::tick();
-            extra_addr = true;
-            extra_val = mdr.uvalue();
 
             alu.perform(BusALU::op_add);
             alu.OP1().pullFrom(reg);

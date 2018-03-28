@@ -40,7 +40,11 @@ void decode(ulong category) {
             break;
         case 006:
             // add
-            opcode_error();
+            // ADD	06ssdd	0 110 sss sss ddd ddd	Add
+            operation = add;
+            mnemonic = "ADD";
+            calc_addressing(s_am, s_reg, src);
+            calc_addressing(am, reg, dest);
             break;
         case 007:
             // sob
@@ -51,8 +55,11 @@ void decode(ulong category) {
             opcode_error();
             break;
         case 016:
-            // sub
-            opcode_error();
+            // SUB	16ssdd	1 110 sss sss ddd ddd	Subtract
+            operation = sub;
+            mnemonic = "SUB";
+            calc_addressing(s_am, s_reg, src);
+            calc_addressing(am, reg, dest);
             break;
         default:
             // todo
@@ -80,7 +87,9 @@ void decode_other() {
             opcode_error();
             break;
         case 03:
-            opcode_error();
+            // BGT
+            operation = bgt;
+            mnemonic = "BGT";
             break;
         case 04:
             opcode_error();
@@ -174,7 +183,8 @@ void decode_0_op() {
             if ( reg == 0){
                 // HALT
                 mnemonic = "HALT";
-                print_addr = false;
+                operation = pass;
+//                print_addr = false;
 
 
                 throw ArchLibError("HALT instruction");
@@ -182,6 +192,7 @@ void decode_0_op() {
 //                cout << "BREAKPOINT" << endl;
                 mnemonic = "BPT";
                 bkpt = true;
+                operation = pass;
             }
             else{
                 opcode_error();

@@ -25,6 +25,7 @@ Clearable out("OUT", DATA_BITS);
 StorageObject mdr("MDR", DATA_BITS); // Data to be written into, or data most recently read from, memory.
 StorageObject ir("IR", DATA_BITS); // Instruction Register. Instruction being decoded and executed.
 StorageObject xr("XR", ADR_BITS); // Index register. Contains a value to be used in calculating a memory address.
+StorageObject immr("IMMR", ADR_BITS);
 Memory m("Memory", 16, 8, -1, 2, true); // Memory
 BusALU alu("ALU", DATA_BITS); // ALU
 BusALU addr_alu("A_ALU", ADR_BITS); // ALU
@@ -43,8 +44,9 @@ void (*operation)();
 
 
 // globals for trace printing
-ulong ps, instruction, addr, A, B, XR, PS, displacement, extra_val;
-bool print_addr, bad_addr, bkpt, extra_addr;
+ulong ps, instruction, addr, A, B, XR, PS;
+short immediate;
+bool print_addr, bad_addr, bkpt, imm;
 string mnemonic;
 
 
@@ -61,23 +63,31 @@ void print_trace() {
     cout << setfill('0') << setw(6) << oct << addr << ":  PS[";
     cout << setfill('0') << setw(2) << oct << ps << "]  ";
     if (print_addr) {
-        cout << setfill('0') << setw(6) << oct << instruction << "  ";
+        cout << setfill('0') << setw(6) << oct << instruction << " ";
     } else if (bad_addr) {
         cout << "???? ";
     } else {
         cout << "     ";
     }
     if( src.D){
-        cout << setfill('0') << setw(6) << oct << src.D_addr << "  ";
+        cout << setfill('0') << setw(6) << oct << src.D_addr << " ";
     }
     if( dest.D){
-        cout << setfill('0') << setw(6) << oct << dest.D_addr << "  ";
+        cout << setfill('0') << setw(6) << oct << dest.D_addr << " ";
     }
 
 
 
 
-    cout << setfill(' ') << left << setw(4) << mnemonic << right;
+    cout << " " << setfill(' ') << left << setw(3) << mnemonic << right;
+
+    if (src.valid || dest.valid){
+        cout << " ";
+    }
+
+    if (imm){
+        cout << " " << dec << immediate;
+    }
 
     if (src.valid){
         print_am(src);

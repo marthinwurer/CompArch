@@ -37,7 +37,7 @@ extern const unsigned int DATA_BITS;
 extern const unsigned int NUM_REGS;
 
 extern Bus abus;
-extern Bus dbus, bitbus;
+extern Bus dbus, bitbus, immbus;
 extern Bus sbus; // Setup Bus. Used to set up the operands
 
 extern vector<Clearable*> regs;
@@ -46,6 +46,7 @@ extern Clearable sss, ddd, out;
 extern Clearable N, Z, V, C;
 extern StorageObject mdr;
 extern StorageObject xr;
+extern StorageObject immr;
 extern StorageObject ir;
 extern Memory m;
 extern BusALU alu;
@@ -54,8 +55,9 @@ extern BusALU addr_alu; // ALU
 extern bool halt, do_writeback;
 
 extern StorageObject se_mask_12, const_2, const_1;
-extern ulong ps, instruction, addr, A, B, XR, extra_val;
-extern bool print_addr, bad_addr, bkpt, extra_addr;
+extern ulong ps, instruction, addr, A, B, XR;
+extern short immediate;
+extern bool print_addr, bad_addr, bkpt, imm;
 extern string mnemonic;
 
 extern void (*operation)();

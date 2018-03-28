@@ -49,6 +49,7 @@ int main( int argc, char * argv[]) {
             // get the ps
             ps = (N.uvalue()<<3) | (Z.uvalue() <<2) | (V.uvalue() << 1) | (C.uvalue());
             print_addr = true;
+            imm = false;
 
             // START IF
 
@@ -60,6 +61,14 @@ int main( int argc, char * argv[]) {
             ir.latchFrom(m.READ());
             Clock::tick();
             instruction = ir.uvalue();
+
+            // increment the pc
+            // inc pc
+            alu.perform(BusALU::op_add);
+            alu.OP1().pullFrom(*regs[7]);
+            alu.OP2().pullFrom(const_2);
+            regs[7]->latchFrom(alu.OUT());
+            Clock::tick();
             // END IF
 
             // START DECODE
@@ -105,13 +114,6 @@ int main( int argc, char * argv[]) {
 //
 //            }
 
-            // increment the pc
-            // inc pc
-            alu.perform(BusALU::op_add);
-            alu.OP1().pullFrom(*regs[7]);
-            alu.OP2().pullFrom(const_2);
-            regs[7]->latchFrom(alu.OUT());
-            Clock::tick();
             print_trace();
         }
     }catch( ArchLibError & e){

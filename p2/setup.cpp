@@ -67,10 +67,14 @@ void setup(){
 
     ddd.connectsTo(sbus.OUT());
     ddd.connectsTo(sbus.IN());
+    ddd.connectsTo(alu.OP1());
+    ddd.connectsTo(alu.OP2());
     sss.connectsTo(sbus.OUT());
     sss.connectsTo(sbus.IN());
     ddd.connectsTo(m.READ());
     sss.connectsTo(m.READ());
+    sss.connectsTo(alu.OP1());
+    sss.connectsTo(alu.OP2());
 
     const_2.connectsTo(alu.OP1());
     const_2.connectsTo(alu.OP2());
