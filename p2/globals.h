@@ -52,7 +52,7 @@ extern Memory m;
 extern BusALU alu;
 extern BusALU addr_alu; // ALU
 
-extern bool halt, do_writeback;
+extern bool halt, do_writeback, addressing_failed;
 
 extern StorageObject se_mask_12, const_2, const_1, const_01;
 extern ulong ps, instruction, addr, A, B, XR;

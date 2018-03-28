@@ -82,6 +82,10 @@ int main( int argc, char * argv[]) {
             // get the instruction category
             ulong category = ir.uvalue() >> 12 & 0b1111;
             decode(category);
+
+            if (addressing_failed){
+                throw ArchLibError("mode error");
+            }
             // END DECODE
 
             if (src.valid) {

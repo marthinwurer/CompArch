@@ -75,8 +75,9 @@ bool calc_addressing(ulong am, ulong reg, struct am_data & data){
             data.mnemomic = ss.str();
             break;
         default:
-            cout << "AHHHHHHHHHHHHHHHHHH" << endl;
-            throw ArchLibError("AAAAAHHHHHH");
+//            cout << "AHHHHHHHHHHHHHHHHHH" << endl;
+            addressing_failed = true;
+            data.mnemomic = "????";
     }
 }
 

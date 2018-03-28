@@ -37,6 +37,7 @@ StorageObject const_1("CONST1", 1, 1);
 
 bool halt(false);
 bool do_writeback(false);
+bool addressing_failed(false);
 
 struct am_data dest;
 struct am_data src;
