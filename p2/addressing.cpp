@@ -86,7 +86,6 @@ void load(struct am_data &am, StorageObject &dest) {
     StorageObject & reg = *regs[am.reg];
     if (am.memory){
         if(am.dec){
-            cout << "decrementing reg " << am.reg << " " << am.mnemomic << endl;
             alu.perform(BusALU::op_sub);
             alu.OP1().pullFrom(reg);
             alu.OP2().pullFrom(const_2);
